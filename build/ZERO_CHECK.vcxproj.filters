@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\Project\Minecraft Village Adv\build\CMakeFiles\f77e2b9d3f07f0c52612ce03ca96ebe0\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{1A8BD598-5B9B-3C2B-8429-9EA5D5FDC4D6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,10 @@
+^D:\PROJECT\MINECRAFT VILLAGE ADV\BUILD\CMAKEFILES\F77E2B9D3F07F0C52612CE03CA96EBE0\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SD:/Project/Minecraft Village Adv" "-BD:/Project/Minecraft Village Adv/build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "D:/Project/Minecraft Village Adv/build/Minecraft_Village_Adv.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

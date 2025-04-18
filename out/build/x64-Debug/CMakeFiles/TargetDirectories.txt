@@ -1,0 +1,3 @@
+D:/Project/Minecraft Village Adv/out/build/x64-Debug/CMakeFiles/Minecraft_Village_Adv.dir
+D:/Project/Minecraft Village Adv/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+D:/Project/Minecraft Village Adv/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
