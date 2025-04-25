@@ -7,16 +7,22 @@ set(CMAKE_CXX_STANDARD 17)
 set(SDL2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
 set(SDL2_LIB_DIR "${CMAKE_SOURCE_DIR}/lib/x64")
 
-# Include SDL2 headers
-include_directories(${SDL2_INCLUDE_DIR})
+# Include directories
+include_directories(
+    ${SDL2_INCLUDE_DIR}
+    ${CMAKE_SOURCE_DIR}/src/her
+)
 
 # Link SDL2 libraries
 link_directories(${SDL2_LIB_DIR})
 
-# Add source files
-add_executable(Minecraft_Village_Adv src/main.cpp)
+# Collect all .cpp files in src/
+file(GLOB SOURCES "src/*.cpp")
 
-# Link SDL2 libraries (add more if needed)
+# Add source files
+add_executable(Minecraft_Village_Adv ${SOURCES})
+
+# Link SDL2 libraries
 target_link_libraries(Minecraft_Village_Adv
     SDL2.lib
     SDL2main.lib

@@ -43,14 +43,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-ALL_BUILD-Debug-e2014b7c99e771db2ffb.json",
+					"jsonFile" : "target-ALL_BUILD-Debug-96cdb9b896ebcaedf79e.json",
 					"name" : "ALL_BUILD",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "Minecraft_Village_Adv::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Minecraft_Village_Adv-Debug-0ae91d7eb0b589d469fd.json",
+					"jsonFile" : "target-Minecraft_Village_Adv-Debug-0cd0fa9913e0a782fdec.json",
 					"name" : "Minecraft_Village_Adv",
 					"projectIndex" : 0
 				},
@@ -105,14 +105,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-ALL_BUILD-Release-e2014b7c99e771db2ffb.json",
+					"jsonFile" : "target-ALL_BUILD-Release-96cdb9b896ebcaedf79e.json",
 					"name" : "ALL_BUILD",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "Minecraft_Village_Adv::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Minecraft_Village_Adv-Release-e20a8ae95665b8ec86af.json",
+					"jsonFile" : "target-Minecraft_Village_Adv-Release-8fc50e8094d5f5d71cf2.json",
 					"name" : "Minecraft_Village_Adv",
 					"projectIndex" : 0
 				},
@@ -167,14 +167,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-ALL_BUILD-MinSizeRel-e2014b7c99e771db2ffb.json",
+					"jsonFile" : "target-ALL_BUILD-MinSizeRel-96cdb9b896ebcaedf79e.json",
 					"name" : "ALL_BUILD",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "Minecraft_Village_Adv::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Minecraft_Village_Adv-MinSizeRel-eb85eee71be6b089ee92.json",
+					"jsonFile" : "target-Minecraft_Village_Adv-MinSizeRel-1ec70eae4c818598922e.json",
 					"name" : "Minecraft_Village_Adv",
 					"projectIndex" : 0
 				},
@@ -229,14 +229,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-ALL_BUILD-RelWithDebInfo-e2014b7c99e771db2ffb.json",
+					"jsonFile" : "target-ALL_BUILD-RelWithDebInfo-96cdb9b896ebcaedf79e.json",
 					"name" : "ALL_BUILD",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "Minecraft_Village_Adv::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Minecraft_Village_Adv-RelWithDebInfo-a1cb4f2fada574fd103b.json",
+					"jsonFile" : "target-Minecraft_Village_Adv-RelWithDebInfo-1d52b11227789fb2182f.json",
 					"name" : "Minecraft_Village_Adv",
 					"projectIndex" : 0
 				},

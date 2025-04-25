@@ -4,6 +4,7 @@
         "*.ndjson": "jsonl",
         "*.dbclient-js": "javascript",
         "*.embeddedhtml": "html",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "xstring": "cpp"
     }
 }
