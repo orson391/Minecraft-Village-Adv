@@ -1,0 +1,125 @@
+// 
+
+#include <SDL.h>
+#include <stdio.h>
+
+// Window and tile settings
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
+#define TILE_SIZE 32  // 32x32 pixel tiles
+#define WORLD_WIDTH 100  // World is 100 tiles wide
+#define WORLD_HEIGHT 100 // World is 100 tiles tall
+#define PLAYER_SPEED 5   // Pixels per frame
+
+int main(int argc, char* argv[]) {
+    // Initialize SDL
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        printf("SDL could not initialize! Error: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    // Create window
+    SDL_Window* window = SDL_CreateWindow("Minecraft-Like 2D", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+    if (!window) {
+        printf("Window could not be created! Error: %s\n", SDL_GetError());
+        SDL_Quit();
+        return 1;
+    }
+
+    // Create renderer
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (!renderer) {
+        printf("Renderer could not be created! Error: %s\n", SDL_GetError());
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
+    }
+
+    // Player position (in world coordinates, pixels)
+    float player_x = WORLD_WIDTH * TILE_SIZE / 2.0f; // Start in world center
+    float player_y = WORLD_HEIGHT * TILE_SIZE / 2.0f;
+
+    // Camera position (top-left of the screen in world coordinates)
+    float camera_x = player_x - WINDOW_WIDTH / 2.0f;
+    float camera_y = player_y - WINDOW_HEIGHT / 2.0f;
+
+    // Simple world map (0 = air, 1 = dirt)
+    int world[WORLD_HEIGHT][WORLD_WIDTH] = {0};
+    // Fill bottom half with dirt for a ground layer
+    for (int y = WORLD_HEIGHT / 2; y < WORLD_HEIGHT; y++) {
+        for (int x = 0; x < WORLD_WIDTH; x++) {
+            world[y][x] = 1;
+        }
+    }
+
+    // Main loop
+    int running = 1;
+    SDL_Event event;
+    while (running) {
+        // Handle input
+        const Uint8* keystates = SDL_GetKeyboardState(NULL);
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                running = 0;
+            }
+        }
+
+        // Move player (WASD keys)
+        if (keystates[SDL_SCANCODE_W]) player_y -= PLAYER_SPEED;
+        if (keystates[SDL_SCANCODE_S]) player_y += PLAYER_SPEED;
+        if (keystates[SDL_SCANCODE_A]) player_x -= PLAYER_SPEED;
+        if (keystates[SDL_SCANCODE_D]) player_x += PLAYER_SPEED;
+
+        // Update camera to follow player
+        camera_x = player_x - WINDOW_WIDTH / 2.0f;
+        camera_y = player_y - WINDOW_HEIGHT / 2.0f;
+
+        // Clamp camera to world bounds
+        if (camera_x < 0) camera_x = 0;
+        if (camera_y < 0) camera_y = 0;
+        if (camera_x > WORLD_WIDTH * TILE_SIZE - WINDOW_WIDTH) camera_x = WORLD_WIDTH * TILE_SIZE - WINDOW_WIDTH;
+        if (camera_y > WORLD_HEIGHT * TILE_SIZE - WINDOW_HEIGHT) camera_y = WORLD_HEIGHT * TILE_SIZE - WINDOW_HEIGHT;
+
+        // Clear screen (sky blue)
+        SDL_SetRenderDrawColor(renderer, 135, 206, 235, 255);
+        SDL_RenderClear(renderer);
+
+        // Draw world tiles
+        for (int y = 0; y < WORLD_HEIGHT; y++) {
+            for (int x = 0; x < WORLD_WIDTH; x++) {
+                if (world[y][x] == 1) { // Dirt block
+                    SDL_SetRenderDrawColor(renderer, 139, 69, 19, 255); // Brown
+                    SDL_Rect tile_rect = {
+                        x * TILE_SIZE - (int)camera_x, // World to screen coordinates
+                        y * TILE_SIZE - (int)camera_y,
+                        TILE_SIZE,
+                        TILE_SIZE
+                    };
+                    SDL_RenderFillRect(renderer, &tile_rect);
+                }
+            }
+        }
+
+        // Draw player (green rectangle)
+        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+        SDL_Rect player_rect = {
+            (int)(player_x - camera_x), // World to screen coordinates
+            (int)(player_y - camera_y),
+            TILE_SIZE,
+            TILE_SIZE
+        };
+        SDL_RenderFillRect(renderer, &player_rect);
+
+        // Update screen
+        SDL_RenderPresent(renderer);
+
+        // Cap frame rate (~60 FPS)
+        SDL_Delay(16);
+    }
+
+    // Clean up
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+    return 0;
+}

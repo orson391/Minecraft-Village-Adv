@@ -1,25 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="D:\Project\Minecraft Village Adv\src\entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\Project\Minecraft Village Adv\src\game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="D:\Project\Minecraft Village Adv\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\Project\Minecraft Village Adv\src\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\Project\Minecraft Village Adv\src\scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="D:\Project\Minecraft Village Adv\src\test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\Project\Minecraft Village Adv\src\texturemanager.cpp">
+    <ClCompile Include="D:\Project\Minecraft Village Adv\src\texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
