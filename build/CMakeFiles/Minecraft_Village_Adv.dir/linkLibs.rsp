@@ -1,0 +1,1 @@
+  -L"D:/Project/Minecraft Village Adv/lib/x64"  -lmingw32 -Wl,-Bstatic -lSDL2main -lSDL2 -Wl,-Bdynamic -lbirch -lSDL2 -lcore -llibrary -Wl,-Bstatic -lSDL2_image -Wl,-Bdynamic -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

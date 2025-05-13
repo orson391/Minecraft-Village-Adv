@@ -1,0 +1,26 @@
+[
+{
+  "directory": "D:/Project/Minecraft Village Adv/build",
+  "command": "C:/msys64/mingw64/bin/g++.exe  @CMakeFiles/Minecraft_Village_Adv.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles/Minecraft_Village_Adv.dir/src/main.cpp.obj -c \"D:/Project/Minecraft Village Adv/src/main.cpp\"",
+  "file": "D:/Project/Minecraft Village Adv/src/main.cpp",
+  "output": "CMakeFiles/Minecraft_Village_Adv.dir/src/main.cpp.obj"
+},
+{
+  "directory": "D:/Project/Minecraft Village Adv/build",
+  "command": "C:/msys64/mingw64/bin/g++.exe  @CMakeFiles/Minecraft_Village_Adv.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles/Minecraft_Village_Adv.dir/src/player.cpp.obj -c \"D:/Project/Minecraft Village Adv/src/player.cpp\"",
+  "file": "D:/Project/Minecraft Village Adv/src/player.cpp",
+  "output": "CMakeFiles/Minecraft_Village_Adv.dir/src/player.cpp.obj"
+},
+{
+  "directory": "D:/Project/Minecraft Village Adv/build",
+  "command": "C:/msys64/mingw64/bin/g++.exe  @CMakeFiles/Minecraft_Village_Adv.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles/Minecraft_Village_Adv.dir/src/test.cpp.obj -c \"D:/Project/Minecraft Village Adv/src/test.cpp\"",
+  "file": "D:/Project/Minecraft Village Adv/src/test.cpp",
+  "output": "CMakeFiles/Minecraft_Village_Adv.dir/src/test.cpp.obj"
+},
+{
+  "directory": "D:/Project/Minecraft Village Adv/build",
+  "command": "C:/msys64/mingw64/bin/g++.exe  @CMakeFiles/Minecraft_Village_Adv.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles/Minecraft_Village_Adv.dir/src/texture.cpp.obj -c \"D:/Project/Minecraft Village Adv/src/texture.cpp\"",
+  "file": "D:/Project/Minecraft Village Adv/src/texture.cpp",
+  "output": "CMakeFiles/Minecraft_Village_Adv.dir/src/texture.cpp.obj"
+}
+]

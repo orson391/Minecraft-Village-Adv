@@ -13,22 +13,23 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/her
 )
 
-# Link SDL2 libraries
+# Link directories
 link_directories(${SDL2_LIB_DIR})
 
 # Collect all .cpp files in src/
 file(GLOB SOURCES "src/*.cpp")
 
-# Add source files
+# Add executable
 add_executable(Minecraft_Village_Adv ${SOURCES})
 
-# Link SDL2 libraries
+# Link SDL2 libraries (MinGW names)
 target_link_libraries(Minecraft_Village_Adv
-    SDL2.lib
-    SDL2main.lib
-    SDL2_image.lib
-    # SDL2_ttf.lib
-    # SDL2_mixer.lib
+    -lmingw32          # MinGW runtime (required before SDL2main)
+    libSDL2main.a      # SDL2main for MinGW
+    libSDL2.a          birch SDL2 core library
+    libSDL2_image.a    # SDL2_image for MinGW
+    # libSDL2_ttf.a
+    # libSDL2_mixer.a
 )
 
 # Set working directory to project root (useful in Visual Studio)
