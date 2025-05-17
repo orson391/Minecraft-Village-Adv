@@ -1,6 +1,6 @@
 CMakeFiles/Minecraft_Village_Adv.dir/src/test.cpp.obj: \
- D:/Project/Minecraft\ Village\ Adv/src/test.cpp \
- D:/Project/Minecraft\ Village\ Adv/src/her/test.hpp \
+ C:\Users\Nabee\OneDrive\Desktop\Minecraft-Village-Adv\src\test.cpp \
+ C:\Users\Nabee\OneDrive\Desktop\Minecraft-Village-Adv\src\her/test.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/string \
  C:/msys64/mingw64/include/c++/14.2.0/bits/requires_hosted.h \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++config.h \

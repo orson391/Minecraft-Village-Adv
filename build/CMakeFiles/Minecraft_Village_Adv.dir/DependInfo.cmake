@@ -8,10 +8,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "D:/Project/Minecraft Village Adv/src/main.cpp" "CMakeFiles/Minecraft_Village_Adv.dir/src/main.cpp.obj" "gcc" "CMakeFiles/Minecraft_Village_Adv.dir/src/main.cpp.obj.d"
-  "D:/Project/Minecraft Village Adv/src/player.cpp" "CMakeFiles/Minecraft_Village_Adv.dir/src/player.cpp.obj" "gcc" "CMakeFiles/Minecraft_Village_Adv.dir/src/player.cpp.obj.d"
-  "D:/Project/Minecraft Village Adv/src/test.cpp" "CMakeFiles/Minecraft_Village_Adv.dir/src/test.cpp.obj" "gcc" "CMakeFiles/Minecraft_Village_Adv.dir/src/test.cpp.obj.d"
-  "D:/Project/Minecraft Village Adv/src/texture.cpp" "CMakeFiles/Minecraft_Village_Adv.dir/src/texture.cpp.obj" "gcc" "CMakeFiles/Minecraft_Village_Adv.dir/src/texture.cpp.obj.d"
+  "C:/Users/Nabee/OneDrive/Desktop/Minecraft-Village-Adv/src/main.cpp" "CMakeFiles/Minecraft_Village_Adv.dir/src/main.cpp.obj" "gcc" "CMakeFiles/Minecraft_Village_Adv.dir/src/main.cpp.obj.d"
+  "C:/Users/Nabee/OneDrive/Desktop/Minecraft-Village-Adv/src/player.cpp" "CMakeFiles/Minecraft_Village_Adv.dir/src/player.cpp.obj" "gcc" "CMakeFiles/Minecraft_Village_Adv.dir/src/player.cpp.obj.d"
+  "C:/Users/Nabee/OneDrive/Desktop/Minecraft-Village-Adv/src/test.cpp" "CMakeFiles/Minecraft_Village_Adv.dir/src/test.cpp.obj" "gcc" "CMakeFiles/Minecraft_Village_Adv.dir/src/test.cpp.obj.d"
+  "C:/Users/Nabee/OneDrive/Desktop/Minecraft-Village-Adv/src/texture.cpp" "CMakeFiles/Minecraft_Village_Adv.dir/src/texture.cpp.obj" "gcc" "CMakeFiles/Minecraft_Village_Adv.dir/src/texture.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -1,43 +1,24 @@
 CMakeFiles/Minecraft_Village_Adv.dir/src/main.cpp.obj: \
- D:/Project/Minecraft\ Village\ Adv/src/main.cpp \
- D:/Project/Minecraft\ Village\ Adv/include/SDL.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_main.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_stdinc.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_config.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_platform.h \
- D:/Project/Minecraft\ Village\ Adv/include/begin_code.h \
- D:/Project/Minecraft\ Village\ Adv/include/close_code.h \
- C:/msys64/mingw64/include/winsdkver.h \
- C:/msys64/mingw64/include/winapifamily.h \
- C:/msys64/mingw64/include/sdkddkver.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stddef.h \
- C:/msys64/mingw64/include/stddef.h C:/msys64/mingw64/include/crtdefs.h \
- C:/msys64/mingw64/include/corecrt.h C:/msys64/mingw64/include/_mingw.h \
+ C:\Users\Nabee\OneDrive\Desktop\Minecraft-Village-Adv\src\main.cpp \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_main.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_stdinc.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_config.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_platform.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/begin_code.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/close_code.h \
+ C:/msys64/mingw64/include/sys/types.h \
+ C:/msys64/mingw64/include/crtdefs.h C:/msys64/mingw64/include/corecrt.h \
+ C:/msys64/mingw64/include/_mingw.h \
  C:/msys64/mingw64/include/_mingw_mac.h \
  C:/msys64/mingw64/include/_mingw_secapi.h \
  C:/msys64/mingw64/include/vadefs.h \
  C:/msys64/mingw64/include/sdks/_mingw_ddk.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h \
- C:/msys64/mingw64/include/stdarg.h \
- C:/msys64/mingw64/include/_mingw_stdarg.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdint.h \
- C:/msys64/mingw64/include/stdint.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_assert.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_atomic.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_audio.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_error.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_endian.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_mutex.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_thread.h \
- C:/msys64/mingw64/include/process.h \
- C:/msys64/mingw64/include/corecrt_startup.h \
- C:/msys64/mingw64/include/sys/types.h \
  C:/msys64/mingw64/include/_mingw_off_t.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_rwops.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_clipboard.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_cpuinfo.h \
- C:/msys64/mingw64/include/intrin.h C:/msys64/mingw64/include/setjmp.h \
- C:/msys64/mingw64/include/psdk_inc/intrin-impl.h \
+ C:/msys64/mingw64/include/stdio.h \
+ C:/msys64/mingw64/include/corecrt_stdio_config.h \
+ C:/msys64/mingw64/include/swprintf.inl \
+ C:/msys64/mingw64/include/sec_api/stdio_s.h \
  C:/msys64/mingw64/include/c++/14.2.0/stdlib.h \
  C:/msys64/mingw64/include/c++/14.2.0/cstdlib \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++config.h \
@@ -54,6 +35,74 @@ CMakeFiles/Minecraft_Village_Adv.dir/src/main.cpp.obj: \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm_malloc.h \
  C:/msys64/mingw64/include/errno.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/std_abs.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stddef.h \
+ C:/msys64/mingw64/include/stddef.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h \
+ C:/msys64/mingw64/include/stdarg.h \
+ C:/msys64/mingw64/include/_mingw_stdarg.h \
+ C:/msys64/mingw64/include/string.h \
+ C:/msys64/mingw64/include/sec_api/string_s.h \
+ C:/msys64/mingw64/include/strings.h C:/msys64/mingw64/include/wchar.h \
+ C:/msys64/mingw64/include/_mingw_stat64.h \
+ C:/msys64/mingw64/include/sec_api/wchar_s.h \
+ C:/msys64/mingw64/include/inttypes.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdint.h \
+ C:/msys64/mingw64/include/stdint.h C:/msys64/mingw64/include/ctype.h \
+ C:/msys64/mingw64/include/c++/14.2.0/math.h \
+ C:/msys64/mingw64/include/c++/14.2.0/cmath \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/requires_hosted.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/cpp_type_traits.h \
+ C:/msys64/mingw64/include/c++/14.2.0/ext/type_traits.h \
+ C:/msys64/mingw64/include/math.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/version.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/specfun.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algobase.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/functexcept.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/exception_defines.h \
+ C:/msys64/mingw64/include/c++/14.2.0/ext/numeric_traits.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_pair.h \
+ C:/msys64/mingw64/include/c++/14.2.0/type_traits \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/move.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/utility.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_iterator_base_types.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_iterator_base_funcs.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/concept_check.h \
+ C:/msys64/mingw64/include/c++/14.2.0/debug/assertions.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_iterator.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/ptr_traits.h \
+ C:/msys64/mingw64/include/c++/14.2.0/debug/debug.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/predefined_ops.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bit \
+ C:/msys64/mingw64/include/c++/14.2.0/concepts \
+ C:/msys64/mingw64/include/c++/14.2.0/limits \
+ C:/msys64/mingw64/include/c++/14.2.0/tr1/gamma.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/tr1/special_function_util.h \
+ C:/msys64/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/tr1/beta_function.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/tr1/hypergeometric.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/tr1/legendre_function.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/tr1/modified_bessel_func.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/tr1/poly_hermite.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/tr1/poly_laguerre.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/float.h \
+ C:/msys64/mingw64/include/float.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_assert.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_atomic.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_audio.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_error.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_endian.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_mutex.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_thread.h \
+ C:/msys64/mingw64/include/process.h \
+ C:/msys64/mingw64/include/corecrt_startup.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_rwops.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_clipboard.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_cpuinfo.h \
+ C:/msys64/mingw64/include/intrin.h C:/msys64/mingw64/include/setjmp.h \
+ C:/msys64/mingw64/include/psdk_inc/intrin-impl.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/x86intrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/x86gprintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ia32intrin.h \
@@ -159,36 +208,36 @@ CMakeFiles/Minecraft_Village_Adv.dir/src/main.cpp.obj: \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xopintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cpuid.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_events.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_video.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_pixels.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_rect.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_surface.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_blendmode.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_keyboard.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_keycode.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_scancode.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_mouse.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_joystick.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_guid.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_gamecontroller.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_sensor.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_quit.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_gesture.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_touch.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_filesystem.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_haptic.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_hidapi.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_hints.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_loadso.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_log.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_messagebox.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_metal.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_power.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_render.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_shape.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_system.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_timer.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_version.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_locale.h \
- D:/Project/Minecraft\ Village\ Adv/include/SDL_misc.h
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_events.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_video.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_pixels.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_rect.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_surface.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_blendmode.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_keyboard.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_keycode.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_scancode.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_mouse.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_joystick.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_guid.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_gamecontroller.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_sensor.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_quit.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_gesture.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_touch.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_filesystem.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_haptic.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_hidapi.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_hints.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_loadso.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_log.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_messagebox.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_metal.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_power.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_render.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_shape.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_system.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_timer.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_version.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_locale.h \
+ C:/vcpkg/installed/x64-mingw-dynamic/include/SDL2/SDL_misc.h
