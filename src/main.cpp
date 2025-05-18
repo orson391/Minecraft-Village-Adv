@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    //inventory myinvent;
+    inventory myinvent;
     
 
     // Initialize Player
@@ -46,29 +46,7 @@ int main(int argc, char* argv[])
     
 
     
-    /*
-    //tree
-    SDL_Rect obstacleRect = { 350, 230, 100, 128 }; // Tree or rock position
-    SDL_Rect treeTrunkHitbox = { obstacleRect.x + 40, obstacleRect.y + 90, 20, 20 };//trunk
-    SDL_Texture* treeTexture;
-    treeTexture = AddTexture::addTexture("assets/uptree.png");
-    bool k = collision::checkCollision(&player.rect, &treeTrunkHitbox);
-    //SDL_Rect rectt = { obstacleRect.x+40, obstacleRect.y +90, 20, 20 };
-    //SDL_SetRenderDrawColor(Coregame::renderer, 139, 69, 19, 255); // brown
     
-    if (k)
-    {
-        printf("TREE HIT");
-    }
-
-    //rock
-    SDL_Rect obstacleRect2 = { 450, 330, 140, 80 }; // rock position
-    SDL_Rect rockTrunkHitbox = { obstacleRect2.x + 25, obstacleRect2.y + 58, 98, 20 };//rockhitbox
-    SDL_Texture* rockTexture;
-    rockTexture = AddTexture::addTexture("assets/uprock.png");
-    //SDL_Rect rectt2 = { obstacleRect2.x + 25, obstacleRect2.y + 58, 98, 20 };
-
-    */
     // Initialize Camera
     camara cam;
     cam.camara_x = player.player_x - WINDOW_WIDTH / 2.0f;
@@ -84,7 +62,7 @@ int main(int argc, char* argv[])
 
 
 
-    //myinvent.addItem("Health Potion", myanimal.skin, 5);
+    myinvent.addItem("Health Potion", myanimal.skin, 5);
 
 
 
@@ -107,7 +85,7 @@ int main(int argc, char* argv[])
         static bool zoomInPressed = false;
         static bool zoomOutPressed = false;
         
-        //myinvent.handleInput(Coregame::ev);
+        myinvent.handleInput(Coregame::event);
 
         if ((state[SDL_SCANCODE_EQUALS] || state[SDL_SCANCODE_KP_PLUS])) {
             if (!zoomInPressed) {
@@ -135,7 +113,7 @@ int main(int argc, char* argv[])
 
 
         
-        //myinvent.render(Coregame::renderer, Coregame::font);
+        
 
         cam.update(player.player_x, player.player_y,deltaTime); // 3. Update camera
         SDL_RenderSetScale(Coregame::renderer, cam.zoom, cam.zoom);
@@ -152,12 +130,16 @@ int main(int argc, char* argv[])
         // Render player using custom renderCharacter method
         player.renderCharacter(Coregame::renderer,cam.camara_x,cam.camara_y); // 7. Render player
 
+
+        myinvent.render(Coregame::renderer, Coregame::font);
+
+
         // Render animal
         AddTexture::drawTexture(myanimal.skin, &myanimal.rect); // 8. Draw animal
 
        
-        SDL_Color white = { 255, 255, 255, 255 };
-        Coregame::renderText("Inventory", cam.camara_x, cam.camara_y, white);
+        //SDL_Color white = { 255, 255, 255, 255 };
+        //Coregame::renderText("Inventory", cam.camara_x, cam.camara_y, white);
 
         
         
@@ -166,11 +148,9 @@ int main(int argc, char* argv[])
         rainSystem.Rain_Update(&rainData);
         rainSystem.Rain_Render(&rainData, Coregame::renderer);
 
-        //tree/rock
-        //AddTexture::drawTexture(treeTexture, &obstacleRect);
-        //AddTexture::drawTexture(rockTexture, &obstacleRect2);
+        
 
-        //SDL_RenderFillRect(Coregame::renderer, &rectt2);
+        
 
 
         //dont touch
