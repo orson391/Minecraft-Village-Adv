@@ -54,11 +54,11 @@ public:
     void render(SDL_Renderer* renderer, TTF_Font* font) const {
         if (!is_open) return;
 
-        SDL_Rect slot{ 0, 0, 64, 64 };
+        SDL_Rect slot{ 0, 0, 20, 20 };
 
         for (size_t i = 0; i < INVENTORY_SIZE; ++i) {
-            slot.x = 20 + static_cast<int>(i) * 70;
-            slot.y = 20;
+            slot.x = 250 + static_cast<int>(i) * 30;
+            slot.y = 550;
 
             SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
             SDL_RenderFillRect(renderer, &slot);

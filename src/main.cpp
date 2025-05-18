@@ -138,8 +138,8 @@ int main(int argc, char* argv[])
         AddTexture::drawTexture(myanimal.skin, &myanimal.rect); // 8. Draw animal
 
        
-        SDL_Color white = { 255, 255, 255, 255 };
-        Coregame::renderText("Inventory", cam.camara_x, cam.camara_y, white);
+        //SDL_Color white = { 255, 255, 255, 255 };
+        //Coregame::renderText("Inventory", cam.camara_x, cam.camara_y, white);
 
         
         
