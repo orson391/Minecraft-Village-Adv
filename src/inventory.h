@@ -71,15 +71,17 @@ public:
 
     // Handle input
     void handleInput(const SDL_Event& event) {
-        if (event.type == SDL_KEYDOWN) {
-            if (event.key.keysym.sym == SDLK_i) {
-                is_open = !is_open;
-            }
+        is_open = true;
+        // if (event.type == SDL_KEYDOWN) {
+        //     if (event.key.keysym.sym == SDLK_i) {
+        //         printf("Presesd I");
+        //         is_open = !is_open;
+        //     }
 
-            if (is_open) {
-                // Add navigation or selection logic here if needed
-            }
-        }
+        //     if (is_open) {
+        //         // Add navigation or selection logic here if needed
+        //     }
+        // }
     }
 
     // Getters
