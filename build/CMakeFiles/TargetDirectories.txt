@@ -1,3 +1,0 @@
-C:/Users/Nabee/OneDrive/Desktop/Minecraft-Village-Adv/build/CMakeFiles/Minecraft_Village_Adv.dir
-C:/Users/Nabee/OneDrive/Desktop/Minecraft-Village-Adv/build/CMakeFiles/edit_cache.dir
-C:/Users/Nabee/OneDrive/Desktop/Minecraft-Village-Adv/build/CMakeFiles/rebuild_cache.dir
