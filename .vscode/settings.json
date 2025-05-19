@@ -5,6 +5,7 @@
         "*.sqlbook": "sql",
         "*.ndjson": "jsonl",
         "filesystem": "cpp",
+<<<<<<< HEAD
         "xstring": "cpp",
         "array": "cpp",
         "atomic": "cpp",
@@ -58,4 +59,9 @@
         "typeinfo": "cpp",
         "variant": "cpp"
     }
+=======
+        "xstring": "cpp"
+    },
+    "C_Cpp.default.compilerPath": "C:/msys64/mingw64/bin/g++.exe"
+>>>>>>> 5eb5b5b914bed533484b41ac41567383847f3932
 }
