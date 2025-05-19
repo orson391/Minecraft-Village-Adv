@@ -57,7 +57,7 @@ void Coregame::handleEvents()
                 // Handle one-time click here
             }
             else if (event.button.button == SDL_BUTTON_RIGHT) {
-                printf("Right mouse CLICK\n");
+                //printf("Right mouse CLICK\n");
                 mouse::RightClick = true;
                 // Handle right click here
             }

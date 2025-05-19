@@ -5,6 +5,7 @@
 #include <cmath>
 #include <cstdio>
 #include <vector>
+#include "Coregame.h"
 
 extern std::vector<ItemDrop>& getItemDrops(); // Forward declaration for global item drop list
 
@@ -19,6 +20,7 @@ animal::animal(float startX, float startY) {
     showHealthBar = false;
     healthBarTimer = 0.0f;
     skin = AddTexture::addTexture("assets/sheep2.png"); // Load texture
+    //hitbox = { static_cast<int>(x), static_cast<int>(y), 32, 32 };
 }
 
 animal::~animal() {
@@ -79,6 +81,7 @@ void animal::update(float deltaTime, float playerX, float playerY, float cam_x, 
 
     x += ve_x * deltaTime;
     y += ve_y * deltaTime;
+    //printf("animal location %f %f\n",x,y);
 
     hitbox = { static_cast<int>(x), static_cast<int>(y), 32, 32 };
 }
@@ -95,7 +98,11 @@ void animal::takeDamage(int damage) {
         printf("Animal dead\n");
          // Drop item
         SDL_Texture* itemTexture = AddTexture::addTexture("assets/Raw_Mutton_JE3_BE2.png");
+        //ItemDrop drop(hitbox.x, hitbox.y, "Meat", itemTexture, 1);
+        //printf("Item Droped at %d %d\n", hitbox.x, hitbox.y);
         ItemDrop drop(x, y, "Meat", itemTexture, 1);
+        //printf("Item Droped at %f %f\n",x,y);
+        
         getItemDrops().push_back(drop);
     }
 }

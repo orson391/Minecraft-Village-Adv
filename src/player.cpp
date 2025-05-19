@@ -99,6 +99,7 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
         {
             colliding = true;
         }
+        
     }
 
     if (colliding != lastCollisionState)

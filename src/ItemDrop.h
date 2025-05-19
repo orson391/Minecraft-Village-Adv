@@ -16,7 +16,7 @@ public:
     const SDL_Rect& getHitbox() const { return hitbox; }
     bool isMarkedForDeletion() const { return markedForDeletion; }
     const std::string& getName() const { return name; }
-private:
+//private:
     float x, y; // World position
     SDL_Rect hitbox; // World-space hitbox
     std::string name; // Item name (e.g., "Meat")
