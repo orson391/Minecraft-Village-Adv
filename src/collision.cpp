@@ -18,3 +18,7 @@ bool  collision::checkCollision(SDL_Rect* a, SDL_Rect* b) {
 	return SDL_HasIntersection(a, b);
 }
 
+bool collision::checkCollision(const SDL_Rect* a, const SDL_Rect* b)
+{
+	return SDL_HasIntersection(a, b);
+}
