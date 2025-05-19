@@ -15,23 +15,24 @@
 #include "ItemDrop.h"
 
 #include <vector>
+#include <iostream>
 
 // Global item drops
 std::vector<ItemDrop> itemDrops;
 
-std::vector<ItemDrop>& getItemDrops() {
+std::vector<ItemDrop> &getItemDrops()
+{
     return itemDrops;
 }
 
-int main(int argc, char* argv[]) {
-    if (!Coregame::initGame("My Game", WINDOW_WIDTH, WINDOW_HEIGHT)) {
+int main(int argc, char *argv[])
+{
+    if (!Coregame::initGame("My Game", WINDOW_WIDTH, WINDOW_HEIGHT))
+    {
         return -1;
     }
 
-    //test
-    SDL_Texture* texture = AddTexture::addTexture("assets/dirt.png");
-    ItemDrop my(500, 700, "HAI",texture, 1);
-
+    // test
 
     // Initialize Inventory
     inventory inv;
@@ -68,7 +69,8 @@ int main(int argc, char* argv[]) {
     const float targetFrameTime = 1.0f / 60.0f;
 
     // Main Game Loop
-    while (Coregame::running) {
+    while (Coregame::running)
+    {
         Uint32 startTime = SDL_GetTicks();
         float deltaTime = (startTime - lastTime) / 1000.0f;
         Coregame::deltaTime = deltaTime;
@@ -76,23 +78,29 @@ int main(int argc, char* argv[]) {
 
         // --- INPUT HANDLING ---
         Coregame::handleEvents();
-        const Uint8* state = SDL_GetKeyboardState(NULL);
+        const Uint8 *state = SDL_GetKeyboardState(NULL);
         static bool zoomInPressed = false;
         static bool zoomOutPressed = false;
 
         inv.handleInput(Coregame::event);
 
-        if ((state[SDL_SCANCODE_EQUALS] || state[SDL_SCANCODE_KP_PLUS]) && !zoomInPressed) {
+        if ((state[SDL_SCANCODE_EQUALS] || state[SDL_SCANCODE_KP_PLUS]) && !zoomInPressed)
+        {
             cam.setZoom(cam.zoom + 0.02f);
             zoomInPressed = true;
-        } else if (!(state[SDL_SCANCODE_EQUALS] || state[SDL_SCANCODE_KP_PLUS])) {
+        }
+        else if (!(state[SDL_SCANCODE_EQUALS] || state[SDL_SCANCODE_KP_PLUS]))
+        {
             zoomInPressed = false;
         }
 
-        if ((state[SDL_SCANCODE_MINUS] || state[SDL_SCANCODE_KP_MINUS]) && !zoomOutPressed) {
+        if ((state[SDL_SCANCODE_MINUS] || state[SDL_SCANCODE_KP_MINUS]) && !zoomOutPressed)
+        {
             cam.setZoom(cam.zoom - 0.02f);
             zoomOutPressed = true;
-        } else if (!(state[SDL_SCANCODE_MINUS] || state[SDL_SCANCODE_KP_MINUS])) {
+        }
+        else if (!(state[SDL_SCANCODE_MINUS] || state[SDL_SCANCODE_KP_MINUS]))
+        {
             zoomOutPressed = false;
         }
 
@@ -103,17 +111,29 @@ int main(int argc, char* argv[]) {
         myanimal.update(deltaTime, player.player_x, player.player_y, cam.camara_x, cam.camara_y);
         player.update(cam.camara_x, cam.camara_y, mytree, myrock, myanimal);
 
-        for (auto& drop : itemDrops) {
+        for (auto &drop : itemDrops)
+        {
             drop.update(deltaTime);
         }
 
-        for (auto& drop : itemDrops) {
-            if (collision::checkCollision(&player.rect, &drop.getHitbox())) {
-                
-                if (drop.pickUp(inv)) {
+        for (auto &drop : itemDrops)
+        {
+            float dx = player.player_x - drop.x;
+            float dy = player.player_y - drop.y;
+            float distance = std::sqrt(dx * dx + dy * dy);
+
+            if (distance < 32)
+            {
+                //std::cout << "Item is nearby!\n";
+                if (drop.pickUp(inv))
+                {
                     printf("Picked up %s\n", drop.getName().c_str());
                 }
             }
+            // if (collision::checkCollision(&player.rect, &drop.getHitbox()))
+            //{
+
+            //}
         }
 
         rainSystem.Rain_Update(&rainData);
@@ -128,19 +148,20 @@ int main(int argc, char* argv[]) {
         player.renderCharacter(Coregame::renderer, cam.camara_x, cam.camara_y);
         rainSystem.Rain_Render(&rainData, Coregame::renderer);
 
-        for (auto& drop : itemDrops) {
+        for (auto &drop : itemDrops)
+        {
             drop.draw(Coregame::renderer, cam.camara_x, cam.camara_y);
         }
-        //test
-        my.draw(Coregame::renderer,cam.camara_x,cam.camara_y);
-        if (collision::checkCollision(&player.rect, &my.hitbox)) {
-                inv.addItem(my.name,my.texture,1);    
+        // test
 
-                if (my.pickUp(inv)) {
-                    printf("Picked up %s\n", my.getName().c_str());
-                }
-            }
-        
+        // std::cout << "Player: (" << player.rect.x << ", " << player.rect.y << ")\n";
+        // std::cout << "Item: (" << my.hitbox.x << ", " << my.hitbox.y << ")\n";
+
+        // if (collision::checkCollision(&player.rect, &my.hitbox))
+        //{
+        //     inv.addItem(my.name, my.texture, 1);
+
+        //}
 
         inv.render(Coregame::renderer, Coregame::font);
 
@@ -150,7 +171,8 @@ int main(int argc, char* argv[]) {
         // --- FRAME DELAY FOR STABLE FPS ---
         Uint32 frameTime = SDL_GetTicks() - startTime;
         float delay = targetFrameTime - (frameTime / 1000.0f);
-        if (delay > 0) {
+        if (delay > 0)
+        {
             SDL_Delay(static_cast<Uint32>(delay * 1000.0f));
         }
     }
