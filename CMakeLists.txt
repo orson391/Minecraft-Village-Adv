@@ -5,12 +5,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Set path variables
-set(VCPKG_ROOT "C:/vcpkg/installed/x64-mingw-dynamic")
-set(VCPKG_LIB_DEBUG "${VCPKG_ROOT}/debug/lib")
-set(VCPKG_LIB_RELEASE "${VCPKG_ROOT}/lib")
-set(VCPKG_BIN_DEBUG "${VCPKG_ROOT}/debug/bin")
-set(VCPKG_BIN_RELEASE "${VCPKG_ROOT}/bin")
-set(SDL2_INCLUDE_DIR "${VCPKG_ROOT}/include")
+set(VCPKG_BIN_DEBUG "${CMAKE_SOURCE_DIR}/bin/debug")
+set(VCPKG_BIN_RELEASE "${CMAKE_SOURCE_DIR}/bin/release")
+set(VCPKG_LIB_DEBUG "${CMAKE_SOURCE_DIR}/lib/debug")
+set(VCPKG_LIB_RELEASE "${CMAKE_SOURCE_DIR}/lib/release")
+
+set(SDL2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
+
 
 # Include directories
 include_directories(${SDL2_INCLUDE_DIR})
