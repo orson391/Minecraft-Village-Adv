@@ -13,12 +13,12 @@ void Keyevent::update(float deltaTime) {
         mouse::mouseX = mouseX;
         mouse::mouseY = mouseY;
         mouse::HoldLeftClick = true;
-        printf("Left mouse HELD at (%d, %d)\n", mouseX, mouseY);
+        //printf("Left mouse HELD at (%d, %d)\n", mouseX, mouseY);
         // Handle continuous left-click actions
     }
 
     if (mouseState & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
-        printf("Right mouse HELD\n");
+        //printf("Right mouse HELD\n");
         mouse::HoldRightClick = true;
         // Handle continuous right-click actions
     }

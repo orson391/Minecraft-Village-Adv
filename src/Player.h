@@ -3,6 +3,7 @@
 #include "Keyevent.h"
 #include "tree.h"
 #include "rock.h"
+#include "animal.h"
 class Player {
 public:
     Player(int x, int y, int w, int h);
@@ -28,7 +29,7 @@ public:
     };
     static Direction currentDirection;
 
-    void update(float& cam_x, float& cam_y, tree& mytree ,rock&myrock);
+    void update(float& cam_x, float& cam_y, tree& mytree ,rock&myrock,animal& myanimal);
     void updateAnimation();
     void renderCharacter(SDL_Renderer* renderer, float camX, float camY);
 
