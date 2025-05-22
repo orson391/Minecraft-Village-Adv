@@ -46,7 +46,7 @@ void inventory::render(SDL_Renderer* renderer, TTF_Font* font) const {
         }
 
         // Optionally draw quantity (requires SDL_ttf)
-        if (items[i].quantity > 0) {
+        if (items[i].quantity > 1) {
             std::string qtyText = std::to_string(items[i].quantity);
             SDL_Color white = {255, 255, 255, 255};
             SDL_Surface* surface = TTF_RenderText_Solid(font, qtyText.c_str(), white);

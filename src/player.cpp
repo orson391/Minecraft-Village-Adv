@@ -85,21 +85,35 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
     { // Skip collisions when jumping high
         if (collision::checkCollision(&playerWorldRect, &mytree.myobject.ObsticleHitbox))
         {
+            if (!mytree.myobject.isAlive)
+            {
+                colliding = false;
+            }
+            else{
             colliding = true;
             player_x = prev_x; // Revert movement
             player_y = prev_y;
+            }
         }
         if (collision::checkCollision(&playerWorldRect, &myrock.myobject.ObsticleHitbox))
         {
-            colliding = true;
-            player_x = prev_x; // Revert movement
-            player_y = prev_y;
+            if (!myrock.myobject.isAlive)
+            {
+                colliding = false;
+            }
+            else{
+
+                colliding = true;
+                player_x = prev_x; // Revert movement
+                player_y = prev_y;
+            }
         }
         if (collision::checkCollision(&playerWorldRect, &myanimal.hitbox))
         {
+            
+            
             colliding = true;
         }
-        
     }
 
     if (colliding != lastCollisionState)
@@ -113,10 +127,12 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
         if (collision::checkCollision(&attackBox, &mytree.myobject.ObsticleHitbox))
         {
             printf("Attack hit tree!\n");
+            mytree.takeDamage(5);
         }
         if (collision::checkCollision(&attackBox, &myrock.myobject.ObsticleHitbox))
         {
             printf("Attack hit rock!\n");
+            myrock.takeDamage(5);
         }
         if (collision::checkCollision(&attackBox, &myanimal.hitbox))
         {
@@ -126,29 +142,40 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
     }
 }
 
-void Player::attack() {
-    if (mouse::LeftClick) {
+void Player::attack()
+{
+    
+    
+
+    
+    
+
+    if (mouse::LeftClick)
+    {
         attacking = true;
-        switch (currentDirection) {
+        switch (currentDirection)
+        {
         case DIR_UP:
-            attackBox = { static_cast<int>(player_x), static_cast<int>(player_y - 20), frameWidth, 20 };
+            attackBox = {static_cast<int>(player_x), static_cast<int>(player_y - 20), frameWidth, 20};
             break;
         case DIR_DOWN:
-            attackBox = { static_cast<int>(player_x), static_cast<int>(player_y + frameHeight), frameWidth, 20 };
+            attackBox = {static_cast<int>(player_x), static_cast<int>(player_y + frameHeight), frameWidth, 20};
             break;
         case DIR_LEFT:
-            attackBox = { static_cast<int>(player_x - 20), static_cast<int>(player_y), 20, frameHeight };
+            attackBox = {static_cast<int>(player_x - 20), static_cast<int>(player_y), 20, frameHeight};
             break;
         case DIR_RIGHT:
-            attackBox = { static_cast<int>(player_x + frameWidth), static_cast<int>(player_y), 20, frameHeight };
+            attackBox = {static_cast<int>(player_x + frameWidth), static_cast<int>(player_y), 20, frameHeight};
             break;
         default:
-            attackBox = { 0, 0, 0, 0 };
+            attackBox = {0, 0, 0, 0};
             break;
         }
-    } else {
+    }
+    else
+    {
         attacking = false;
-        attackBox = { 0, 0, 0, 0 };
+        attackBox = {0, 0, 0, 0};
     }
 }
 

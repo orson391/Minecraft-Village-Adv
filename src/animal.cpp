@@ -154,6 +154,8 @@ void animal::draw(SDL_Renderer* renderer, float cam_x, float cam_y) {
         SDL_RenderFillRect(renderer, &fillRect);
     }
 
+    
+
     // Render hitbox (debug)
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     SDL_RenderDrawRect(renderer, &renderRect);

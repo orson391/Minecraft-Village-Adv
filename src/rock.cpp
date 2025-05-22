@@ -1,10 +1,16 @@
 #include "rock.h"
 #include "AddTexture.h"
 #include "Coregame.h"
+#include <vector>
+#include "ItemDrop.h"
 
-
+extern std::vector<ItemDrop>& getItemDrops(); // Forward declaration for global item drop list
 void rock::init()
 {
+    myobject.health = myobject.maxHealth; // Initialize health to max
+    myobject.isAlive = true;
+    myobject.showHealthBar = false;
+    myobject.healthBarTimer = 0.0f;
     myobject.Texture = AddTexture::addTexture("assets/uprock.png");
 
     // Use the tree's actual position (x, y)s
@@ -19,7 +25,36 @@ void rock::init()
     };
 }
 
+void rock::takeDamage(int damage) {
+    if (!myobject.isAlive) return;
+
+    myobject.health -= damage;
+    myobject.showHealthBar = true; // Show health bar on hit
+    myobject.healthBarTimer = 3.0f; // Display for 3 seconds
+    if (myobject.health <= 0) {
+        myobject.health = 0;
+        myobject.isAlive = false;
+        printf("rock broke\n");
+         // Drop item
+        SDL_Texture* itemTexture = AddTexture::addTexture("assets/Raw_Mutton_JE3_BE2.png");
+        //ItemDrop drop(hitbox.x, hitbox.y, "Meat", itemTexture, 1);
+        //printf("Item Droped at %d %d\n", hitbox.x, hitbox.y);
+        ItemDrop drop(x+70, y+40, "Rock", itemTexture, 10);
+        //printf("Item Droped at %f %f\n",x,y);
+        
+        getItemDrops().push_back(drop);
+    }
+}
+
 void rock::render(float cam_x, float cam_y) {
+    if (!myobject.isAlive) return;
+    // Update health bar timer
+    if (myobject.showHealthBar) {
+        myobject.healthBarTimer -= Coregame::deltaTime;
+        if (myobject.healthBarTimer <= 0.0f) {
+            myobject.showHealthBar = false;
+        }
+    }
     const int screenWidth = 800;
     const int screenHeight = 600;
 
@@ -44,6 +79,36 @@ void rock::render(float cam_x, float cam_y) {
 
     // Render tree
     AddTexture::drawTexture(myobject.Texture, &drawRect);
+
+         // Render health bar if visible
+    if (myobject.showHealthBar) {
+        // Health bar dimensions
+        const int barWidth = 60; // Same width as animal
+        const int barHeight = 3; // Thin bar
+        const int barOffsetY = -40; // 10 pixels above animal
+
+        // Background (red, full width)
+        SDL_Rect bgRect = {
+            hitboxRect.x,
+            hitboxRect.y + barOffsetY,
+            barWidth,
+            barHeight
+        };
+        SDL_SetRenderDrawColor(Coregame::renderer, 255,100, 50, 255);
+        SDL_RenderFillRect(Coregame::renderer, &bgRect);
+
+        // Foreground (green, proportional to health)
+        int fillWidth = static_cast<int>((static_cast<float>(myobject.health) / myobject.maxHealth) * barWidth);
+        SDL_Rect fillRect = {
+            hitboxRect.x,
+            hitboxRect.y + barOffsetY,
+            fillWidth,
+            barHeight
+        };
+        SDL_SetRenderDrawColor(Coregame::renderer, 0, 255, 0, 255);
+        SDL_RenderFillRect(Coregame::renderer, &fillRect);
+    }
+
 
     // Render hitbox (debug)
     SDL_SetRenderDrawColor(Coregame::renderer, 0, 255, 0, 255); // Green
