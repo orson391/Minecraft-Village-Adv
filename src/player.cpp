@@ -20,6 +20,9 @@ bool Player::attacking = false;
 
 Player::Player(int x, int y, int w, int h)
 {
+    health = maxHealth; // Initialize health to max
+    isAlive = true;
+
     rect = {x, y, w, h};
     player_x = static_cast<float>(x);
     player_y = static_cast<float>(y);
@@ -42,8 +45,37 @@ Player::~Player()
         SDL_DestroyTexture(walkRight);
 }
 
+void Player::takeDamage(int damage)
+{
+    if (!isAlive)
+        return;
+
+    health -= damage;
+
+    if (health <= 0)
+    {
+        health = 0;
+        isAlive = false;
+        printf("Player broke\n");
+        // Drop item
+        // SDL_Texture* itemTexture = AddTexture::addTexture("assets/Raw_Mutton_JE3_BE2.png");
+        // ItemDrop drop(hitbox.x, hitbox.y, "Meat", itemTexture, 1);
+        // printf("Item Droped at %d %d\n", hitbox.x, hitbox.y);
+        // ItemDrop drop(x+70, y+40, "Rock", itemTexture, 10);
+        // printf("Item Droped at %f %f\n",x,y);
+
+        // getItemDrops().push_back(drop);
+    }
+}
+
 void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, animal &myanimal)
-{                            // Add tree parameter
+{ // Add tree parameter
+
+    if (!isAlive)
+    {
+        return;
+    }
+
     float prev_x = player_x; // Store previous position
     float prev_y = player_y;
 
@@ -89,10 +121,11 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
             {
                 colliding = false;
             }
-            else{
-            colliding = true;
-            player_x = prev_x; // Revert movement
-            player_y = prev_y;
+            else
+            {
+                colliding = true;
+                player_x = prev_x; // Revert movement
+                player_y = prev_y;
             }
         }
         if (collision::checkCollision(&playerWorldRect, &myrock.myobject.ObsticleHitbox))
@@ -101,7 +134,8 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
             {
                 colliding = false;
             }
-            else{
+            else
+            {
 
                 colliding = true;
                 player_x = prev_x; // Revert movement
@@ -110,8 +144,7 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
         }
         if (collision::checkCollision(&playerWorldRect, &myanimal.hitbox))
         {
-            
-            
+
             colliding = true;
         }
     }
@@ -144,10 +177,15 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
 
 void Player::attack()
 {
-    
-    
-
-    
+    if (!isAlive)
+    {
+        return;
+    }
+    if (mouse::RightClick)
+    {
+        //health -=5;
+        takeDamage(5);
+    }
     
 
     if (mouse::LeftClick)
@@ -181,6 +219,11 @@ void Player::attack()
 
 void Player::updateAnimation()
 {
+    if (!isAlive)
+    {
+        return;
+    }
+    
     if (!isMoving)
     {
         currentFrame = 0;
@@ -197,6 +240,12 @@ void Player::updateAnimation()
 
 void Player::renderCharacter(SDL_Renderer *renderer, float camX, float camY)
 {
+
+    if (!isAlive)
+        return;
+
+    /* code */
+
     SDL_Texture *currentTexture = walkDown; // Default to down
 
     switch (currentDirection)
@@ -252,6 +301,44 @@ void Player::renderCharacter(SDL_Renderer *renderer, float camX, float camY)
             attackBox.w,
             attackBox.h};
         SDL_RenderDrawRect(renderer, &attackRenderRect);
+    }
+
+
+    //healthbar
+    int totalBlocks = 8;
+    int blockWidth = 10;
+    int blockHeight = 10;
+    int blockSpacing = 13; // space between blocks
+    int maxHealth = 100;   // for example
+    int healthPerBlock = maxHealth / totalBlocks;
+
+    SDL_Rect HealthRect{0, 0, blockWidth, blockHeight};
+
+    for (int i = 0; i < totalBlocks; ++i)
+    {
+        HealthRect.x = 250 + i * blockSpacing;
+        HealthRect.y = 530;
+
+        int blockThreshold = (i + 1) * healthPerBlock;
+
+        if (health >= blockThreshold)
+        {
+            // Full red block
+            SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        }
+        else if (health > i * healthPerBlock)
+        {
+            // Partial block (fade color for visual effect)
+            float fillPercent = (float)(health - i * healthPerBlock) / healthPerBlock;
+            SDL_SetRenderDrawColor(renderer, 255, static_cast<Uint8>(255 * (1 - fillPercent)), static_cast<Uint8>(255 * (1 - fillPercent)), 255);
+        }
+        else
+        {
+            // Empty block (dark grey)
+            SDL_SetRenderDrawColor(renderer, 60, 60, 60, 255);
+        }
+
+        SDL_RenderFillRect(renderer, &HealthRect);
     }
 
     // debug

@@ -16,6 +16,14 @@ public:
     SDL_Rect rect;
     SDL_Rect attackBox;
 
+
+    int health;
+	bool isAlive;
+		   // Controls health bar visibility
+	
+	const int maxHealth = 100; // Maximum health
+
+
     static float player_x; // Declaration only
     static float player_y;
     static int currentFrame;
@@ -32,6 +40,8 @@ public:
     void update(float& cam_x, float& cam_y, tree& mytree ,rock&myrock,animal& myanimal);
     void updateAnimation();
     void renderCharacter(SDL_Renderer* renderer, float camX, float camY);
+
+    void takeDamage(int damage);
 
     int totalFrames = 8;
     int frameWidth = 32;
