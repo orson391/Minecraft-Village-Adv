@@ -26,6 +26,9 @@ Player::Player(int x, int y, int w, int h)
     rect = {x, y, w, h};
     player_x = static_cast<float>(x);
     player_y = static_cast<float>(y);
+    
+
+    //walkUp = AddTexture::addTexture("assets/ZombieWALKINGDOWN.png");
     walkUp = AddTexture::addTexture("assets/PLAYERWALKINGUP.png");
     walkDown = AddTexture::addTexture("assets/PLAYERWALKINGDOWN.png");
     walkLeft = AddTexture::addTexture("assets/PLAYERWALKINGLEFT.png");
@@ -107,10 +110,10 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
     // Collision check in world-space
     static bool lastCollisionState = false;
     SDL_Rect playerWorldRect = {
-        static_cast<int>(player_x),
-        static_cast<int>(player_y),
-        frameWidth,
-        frameHeight};
+        static_cast<int>(player_x)+5,
+        static_cast<int>(player_y)+10,
+        frameWidth-10,
+        frameHeight-10};
 
     bool colliding = false;
     if (!isJumping || jumpZ > -10.0f)
@@ -344,4 +347,5 @@ void Player::renderCharacter(SDL_Renderer *renderer, float camX, float camY)
     // debug
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red
     SDL_RenderDrawRect(renderer, &renderRect);
+    //SDL_RenderDrawRect(renderer, &woorld);
 }
