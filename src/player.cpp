@@ -5,6 +5,9 @@
 #include "Coregame.h"
 #include "collision.h"
 #include "mouse.h"
+#include "tree.h"
+#include "rock.h"
+#include "animal.h"
 #include "enemy.h"
 
 // Static member definitions

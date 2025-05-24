@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 
     
     //enemy
-    enemy myenmy(player.player_x + 100,player.player_y + 100);
+    enemy myenemy(player.player_x + 100, player.player_y + 100); // Fixed typo
 
 
     // Timing
@@ -114,10 +114,11 @@ int main(int argc, char *argv[])
         cam.update(player.player_x, player.player_y, deltaTime);
         SDL_RenderSetScale(Coregame::renderer, cam.zoom, cam.zoom);
 
+        
 
         myanimal.update(deltaTime, player.player_x, player.player_y, cam.camara_x, cam.camara_y);
-        myenmy.update(deltaTime,player.player_x, player.player_y, cam.camara_x, cam.camara_y);
-        player.update(cam.camara_x, cam.camara_y, mytree, myrock, myanimal ,myenmy);
+        myenemy.update(deltaTime,player.player_x, player.player_y, cam.camara_x, cam.camara_y,player);
+        player.update(cam.camara_x, cam.camara_y, mytree, myrock, myanimal ,myenemy);
 
         for (auto &drop : itemDrops)
         {
@@ -154,7 +155,7 @@ int main(int argc, char *argv[])
         myrock.render(cam.camara_x, cam.camara_y);
         myanimal.draw(Coregame::renderer, cam.camara_x, cam.camara_y);
         
-        myenmy.draw(Coregame::renderer, cam.camara_x, cam.camara_y);
+        myenemy.draw(Coregame::renderer, cam.camara_x, cam.camara_y);
 
         player.renderCharacter(Coregame::renderer, cam.camara_x, cam.camara_y);
         rainSystem.Rain_Render(&rainData, Coregame::renderer);
@@ -163,16 +164,7 @@ int main(int argc, char *argv[])
         {
             drop.draw(Coregame::renderer, cam.camara_x, cam.camara_y);
         }
-        // test
-
-        // std::cout << "Player: (" << player.rect.x << ", " << player.rect.y << ")\n";
-        // std::cout << "Item: (" << my.hitbox.x << ", " << my.hitbox.y << ")\n";
-
-        // if (collision::checkCollision(&player.rect, &my.hitbox))
-        //{
-        //     inv.addItem(my.name, my.texture, 1);
-
-        //}
+        
 
         inv.render(Coregame::renderer, Coregame::font);
 

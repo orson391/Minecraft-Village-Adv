@@ -5,6 +5,12 @@
 #include "rock.h"
 #include "animal.h"
 #include "enemy.h"
+
+
+class enemy;  // 👈 Forward declaration
+class tree;
+class rock;
+class animal;
 class Player {
 public:
     Player(int x, int y, int w, int h);
@@ -38,7 +44,7 @@ public:
     };
     static Direction currentDirection;
 
-    void update(float& cam_x, float& cam_y, tree& mytree ,rock&myrock,animal& myanimal ,enemy& myenemy);
+    void update(float& cam_x, float& cam_y, tree& mytree ,rock&myrock,animal& myanimal ,enemy &myenemy);
     void updateAnimation();
     void renderCharacter(SDL_Renderer* renderer, float camX, float camY);
 

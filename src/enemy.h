@@ -4,11 +4,14 @@
 #include <cmath>
 #include <vector>
 
+class Player;
+
 enum class enemyState
 {
     Idle,
-    Wander,
-    Attack
+    Pursue,
+    Attack,
+    Wander
 };
 
 class enemy
@@ -17,7 +20,7 @@ public:
     enemy(float startX, float startY);
     ~enemy();
 
-    void update(float deltaTime, float playerX, float playerY, float camX, float camY);
+    void update(float deltaTime, float playerX, float playerY, float camX, float camY, Player &player);
     void draw(SDL_Renderer *renderer, float camX, float camY);
     void takeDamage(int damage);
 
@@ -29,7 +32,8 @@ private:
     float x, y;       // World position
     float ve_x, ve_y; // Velocity
     enemyState state;
-    float stateTimer;
+    float stateTimer;  // Timer for state transitions
+    float attackCooldown; // Cooldown for attacks
 
     // Animation properties
     int currentFrame = 0;
@@ -62,5 +66,3 @@ private:
 
     void updateAnimation();
 };
-
-//#endif

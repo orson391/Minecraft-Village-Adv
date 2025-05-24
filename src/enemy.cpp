@@ -6,12 +6,15 @@
 #include <cstdio>
 #include <vector>
 #include "Coregame.h"
+#include "collision.h"
+#include "Player.h"
 
 extern std::vector<ItemDrop>& getItemDrops();
 
 enemy::enemy(float startX, float startY)
     : x(startX), y(startY), ve_x(0), ve_y(0), state(enemyState::Idle), stateTimer(2.0f),
-      health(maxHealth), isAlive(true), showHealthBar(false), healthBarTimer(0.0f)
+      health(maxHealth), isAlive(true), showHealthBar(false), healthBarTimer(0.0f),
+      attackCooldown(0.0f)
 {
     walkUp = AddTexture::addTexture("assets/ZombieWALKINGUP.png");
     walkDown = AddTexture::addTexture("assets/ZombieWALKINGDOWN.png");
@@ -52,20 +55,107 @@ void enemy::takeDamage(int damage)
     }
 }
 
-void enemy::update(float deltaTime, float playerX, float playerY, float camX, float camY)
+void enemy::update(float deltaTime, float playerX, float playerY, float camX, float camY, Player &player)
 {
     if (!isAlive) return;
 
-    // Determine direction based on velocity
-    if (ve_x > 0) currentDirection = Direction::RIGHT;
-    else if (ve_x < 0) currentDirection = Direction::LEFT;
-    else if (ve_y > 0) currentDirection = Direction::DOWN;
-    else if (ve_y < 0) currentDirection = Direction::UP;
-    else currentDirection = Direction::IDLE;
+    // Update attack cooldown
+    if (attackCooldown > 0.0f)
+    {
+        attackCooldown -= deltaTime;
+    }
+
+    // Calculate distance to player
+    float dx = playerX - x;
+    float dy = playerY - y;
+    float distance = std::sqrt(dx * dx + dy * dy);
+
+    // State transitions
+    if (distance < 200.0f && state != enemyState::Attack)
+    {
+        state = enemyState::Pursue;
+        stateTimer = 0.0f; // Immediate pursuit
+    }
+    else if (distance >= 200.0f && state == enemyState::Pursue)
+    {
+        state = enemyState::Idle;
+        stateTimer = 2.0f;
+    }
+
+    // Update state
+    stateTimer -= deltaTime;
+
+    switch (state)
+    {
+    case enemyState::Idle:
+        ve_x = ve_y = 0;
+        isMoving = false;
+        if (stateTimer <= 0)
+        {
+            state = enemyState::Wander;
+            float angle = static_cast<float>(rand() % 360) * M_PI / 180.0f;
+            ve_x = std::cos(angle) * 50.0f; // Slower wandering speed
+            ve_y = std::sin(angle) * 50.0f;
+            stateTimer = 3.0f;
+        }
+        break;
+    case enemyState::Wander:
+        if (stateTimer <= 0)
+        {
+            state = enemyState::Idle;
+            ve_x = ve_y = 0;
+            stateTimer = 2.0f;
+        }
+        break;
+    case enemyState::Pursue:
+        if (distance <= 40.0f) // Increased attack range
+        {
+            state = enemyState::Attack;
+            ve_x = ve_y = 0; // Stop moving when attacking
+            stateTimer = 0.0f;
+            printf("Zombie entered Attack state\n");
+        }
+        else
+        {
+            float angle = std::atan2(dy, dx);
+            ve_x = std::cos(angle) * 70.0f; // Pursuit speed
+            ve_y = std::sin(angle) * 70.0f;
+        }
+        break;
+    case enemyState::Attack:
+        if (distance > 3.0f)
+        {
+            state = enemyState::Pursue;
+            stateTimer = 0.0f;
+        }
+        ve_x = ve_y = 0; // Stay stationary while attacking
+        break;
+    }
+
+    // Update direction based on player position (for Attack state) or velocity
+    if (state == enemyState::Attack)
+    {
+        // Face the player based on relative position
+        if (std::abs(dx) > std::abs(dy))
+        {
+            currentDirection = dx > 0 ? Direction::RIGHT : Direction::LEFT;
+        }
+        else
+        {
+            currentDirection = dy > 0 ? Direction::DOWN : Direction::UP;
+        }
+    }
+    else
+    {
+        if (ve_x > 0) currentDirection = Direction::RIGHT;
+        else if (ve_x < 0) currentDirection = Direction::LEFT;
+        else if (ve_y > 0) currentDirection = Direction::DOWN;
+        else if (ve_y < 0) currentDirection = Direction::UP;
+        else currentDirection = Direction::IDLE;
+    }
 
     isMoving = (ve_x != 0 || ve_y != 0);
 
-    // Update attack box
     if (state == enemyState::Attack)
     {
         attacking = true;
@@ -84,14 +174,61 @@ void enemy::update(float deltaTime, float playerX, float playerY, float camX, fl
             attackBox = {static_cast<int>(x + frameWidth), static_cast<int>(y), 20, frameHeight};
             break;
         default:
-            attackBox = {0, 0, 0, 0};
+            attackBox = {static_cast<int>(x), static_cast<int>(y), frameWidth, frameHeight}; // Fallback to player position
             break;
         }
+        printf("Attack box set: (%d, %d, %d, %d), direction: %d\n",
+               attackBox.x, attackBox.y, attackBox.w, attackBox.h, static_cast<int>(currentDirection));
     }
     else
     {
         attacking = false;
         attackBox = {0, 0, 0, 0};
+    }
+
+    // Store previous position
+    float prev_x = x;
+    float prev_y = y;
+
+    // Apply movement
+    x += ve_x * deltaTime;
+    y += ve_y * deltaTime;
+
+    // Update hitbox after movement
+    hitbox = {static_cast<int>(x), static_cast<int>(y), frameWidth, frameHeight};
+
+    // Check collision with player's world-space rect (aligned with Player::update)
+    SDL_Rect playerWorldRect = {
+        static_cast<int>(player.player_x) + 5,
+        static_cast<int>(player.player_y) + 10,
+        player.frameWidth - 10,
+        player.frameHeight - 10
+    };
+
+    if (collision::checkCollision(&hitbox, &playerWorldRect) && player.isAlive)
+    {
+        printf("Enemy collision with player, reverting position\n");
+        x = prev_x; // Revert movement
+        y = prev_y;
+        ve_x = ve_y = 0; // Stop movement
+        isMoving = false;
+    }
+
+    // Update attack collision
+    if (attacking && attackCooldown <= 0.0f)
+    {
+        if (collision::checkCollision(&attackBox, &playerWorldRect))
+        {
+            player.takeDamage(5);
+            attackCooldown = 1.0f; // 1-second cooldown
+            printf("Zombie attacked player, dealing 5 damage\n");
+        }
+        else
+        {
+            printf("Zombie attack missed: attackBox (%d, %d, %d, %d), playerWorldRect (%d, %d, %d, %d)\n",
+                   attackBox.x, attackBox.y, attackBox.w, attackBox.h,
+                   playerWorldRect.x, playerWorldRect.y, playerWorldRect.w, playerWorldRect.h);
+        }
     }
 
     updateAnimation();
@@ -106,56 +243,7 @@ void enemy::update(float deltaTime, float playerX, float playerY, float camX, fl
         }
     }
 
-    float dx = playerX - x;
-    float dy = playerY - y;
-    float distance = std::sqrt(dx * dx + dy * dy);
-
-    if (distance < 30.0f && state != enemyState::Attack)
-    {
-        state = enemyState::Attack;
-        float angle = std::atan2(dy, dx);
-        ve_x = -std::cos(angle) * 150.0f; // Move toward player
-        ve_y = -std::sin(angle) * 150.0f;
-        stateTimer = 1.5f;
-    }
-
-    stateTimer -= deltaTime;
-
-    switch (state)
-    {
-    case enemyState::Idle:
-        ve_x = ve_y = 0;
-        isMoving = false;
-        if (stateTimer <= 0)
-        {
-            state = enemyState::Wander;
-            float angle = static_cast<float>(rand() % 360) * M_PI / 180.0f;
-            ve_x = std::cos(angle) * 50.0f;
-            ve_y = std::sin(angle) * 50.0f;
-            stateTimer = 3.0f;
-        }
-        break;
-    case enemyState::Wander:
-        if (stateTimer <= 0)
-        {
-            state = enemyState::Idle;
-            ve_x = ve_y = 0;
-            stateTimer = 2.0f;
-        }
-        break;
-    case enemyState::Attack:
-        if (stateTimer <= 0 || distance > 30.0f)
-        {
-            state = enemyState::Idle;
-            ve_x = ve_y = 0;
-            stateTimer = 2.0f;
-        }
-        break;
-    }
-
-    x += ve_x * deltaTime;
-    y += ve_y * deltaTime;
-
+    // Update hitbox and rect after reversion
     hitbox = {static_cast<int>(x), static_cast<int>(y), frameWidth, frameHeight};
     rect = {static_cast<int>(x - camX), static_cast<int>(y - camY), frameWidth, frameHeight};
 }
