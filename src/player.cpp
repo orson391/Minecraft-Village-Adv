@@ -5,6 +5,7 @@
 #include "Coregame.h"
 #include "collision.h"
 #include "mouse.h"
+#include "enemy.h"
 
 // Static member definitions
 float Player::player_x = 0.0f;
@@ -71,7 +72,7 @@ void Player::takeDamage(int damage)
     }
 }
 
-void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, animal &myanimal)
+void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, animal &myanimal , enemy &myenemy)
 { // Add tree parameter
 
     if (!isAlive)
@@ -150,6 +151,11 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
 
             colliding = true;
         }
+        if (collision::checkCollision(&playerWorldRect, &myenemy.hitbox))
+        {
+
+            colliding = true;
+        }
     }
 
     if (colliding != lastCollisionState)
@@ -175,6 +181,12 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
             printf("Attack hit animal!\n");
             myanimal.takeDamage(10);
         }
+        if (collision::checkCollision(&attackBox, &myenemy.hitbox))
+        {
+            printf("Attack hit enemy!\n");
+            myenemy.takeDamage(10);
+        }
+
     }
 }
 

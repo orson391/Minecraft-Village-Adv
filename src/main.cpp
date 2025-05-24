@@ -13,6 +13,7 @@
 #include "rock.h"
 #include "inventory.h"
 #include "ItemDrop.h"
+#include "enemy.h"
 
 #include <vector>
 #include <iostream>
@@ -64,6 +65,11 @@ int main(int argc, char *argv[])
     // Initialize Animal
     animal myanimal(player.player_x + 50, player.player_y + 50); // Spawn near the player
 
+    
+    //enemy
+    enemy myenmy(player.player_x + 100,player.player_y + 100);
+
+
     // Timing
     Uint32 lastTime = SDL_GetTicks();
     const float targetFrameTime = 1.0f / 60.0f;
@@ -108,8 +114,10 @@ int main(int argc, char *argv[])
         cam.update(player.player_x, player.player_y, deltaTime);
         SDL_RenderSetScale(Coregame::renderer, cam.zoom, cam.zoom);
 
+
         myanimal.update(deltaTime, player.player_x, player.player_y, cam.camara_x, cam.camara_y);
-        player.update(cam.camara_x, cam.camara_y, mytree, myrock, myanimal);
+        myenmy.update(deltaTime,player.player_x, player.player_y, cam.camara_x, cam.camara_y);
+        player.update(cam.camara_x, cam.camara_y, mytree, myrock, myanimal ,myenmy);
 
         for (auto &drop : itemDrops)
         {
@@ -145,6 +153,9 @@ int main(int argc, char *argv[])
         mytree.render(cam.camara_x, cam.camara_y);
         myrock.render(cam.camara_x, cam.camara_y);
         myanimal.draw(Coregame::renderer, cam.camara_x, cam.camara_y);
+        
+        myenmy.draw(Coregame::renderer, cam.camara_x, cam.camara_y);
+
         player.renderCharacter(Coregame::renderer, cam.camara_x, cam.camara_y);
         rainSystem.Rain_Render(&rainData, Coregame::renderer);
 
