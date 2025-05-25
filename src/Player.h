@@ -35,6 +35,7 @@ public:
     static float player_y;
     static int currentFrame;
     static bool isMoving;
+    static bool isRunning;
     enum Direction {
         DIR_UP,
         DIR_DOWN,

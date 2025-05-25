@@ -15,6 +15,7 @@ float Player::player_x = 0.0f;
 float Player::player_y = 0.0f;
 int Player::currentFrame = 0;
 bool Player::isMoving = false;
+bool Player::isRunning =  false;;
 Player::Direction Player::currentDirection = Player::DIR_IDLE;
 // jump
 float Player::jumpZ = 0.0f;
@@ -249,7 +250,12 @@ void Player::updateAnimation()
     }
 
     Uint32 now = SDL_GetTicks();
-    if (now > lastFrameTime + frameTime)
+    int running = 0;
+    if(isRunning)
+    {
+        running = 60;
+    }
+    if (now > lastFrameTime + frameTime - running)
     {
         currentFrame = (currentFrame + 1) % totalFrames;
         lastFrameTime = now;

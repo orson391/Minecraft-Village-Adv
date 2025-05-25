@@ -26,29 +26,38 @@ void Keyevent::update(float deltaTime) {
 
     const Uint8* keys = SDL_GetKeyboardState(nullptr);
     const float speed = 70.0f;
-
+    const float dashSpeed = 25.0f;
+    float totalspeed = speed;
+    Player::isRunning = false;
     Player::isMoving = false;
 
+    if (keys[SDL_SCANCODE_LSHIFT])
+    {
+        Player::isRunning = true;
+        totalspeed += dashSpeed;
+    }
+    
+
     if (keys[SDL_SCANCODE_W]) {
-        Player::player_y -= speed * deltaTime;
+        Player::player_y -= totalspeed * deltaTime;
         Player::currentDirection = Player::DIR_UP;
         Player::isMoving = true;
         //printf("W pressed, player_y: %.2f\n", Player::player_y); // Debug
     }
     else if (keys[SDL_SCANCODE_S]) {
-        Player::player_y += speed * deltaTime;
+        Player::player_y += totalspeed * deltaTime;
         Player::currentDirection = Player::DIR_DOWN;
         Player::isMoving = true;
         //printf("S pressed, player_y: %.2f\n", Player::player_y); // Debug
     }
     else if (keys[SDL_SCANCODE_A]) {
-        Player::player_x -= speed * deltaTime;
+        Player::player_x -= totalspeed * deltaTime;
         Player::currentDirection = Player::DIR_LEFT;
         Player::isMoving = true;
         //printf("A pressed, player_x: %.2f\n", Player::player_x); // Debug
     }
     else if (keys[SDL_SCANCODE_D]) {
-        Player::player_x += speed * deltaTime;
+        Player::player_x += totalspeed * deltaTime;
         Player::currentDirection = Player::DIR_RIGHT;
         Player::isMoving = true;
         //printf("D pressed, player_x: %.2f\n", Player::player_x); // Debug

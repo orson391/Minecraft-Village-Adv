@@ -58,6 +58,11 @@ void enemy::takeDamage(int damage)
 void enemy::update(float deltaTime, float playerX, float playerY, float camX, float camY, Player &player)
 {
     if (!isAlive) return;
+    if (!player.isAlive)
+    {
+        state=enemyState::Wander;
+    }
+    
 
     // Update attack cooldown
     if (attackCooldown > 0.0f)
