@@ -2,7 +2,7 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 
-const float RENDER_DISTANCE = 1000.0f;
+const float RENDER_DISTANCE = 1500.0f;
 
 Map::Map() {
     // Initialize world to grass (0)
