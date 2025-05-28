@@ -15,7 +15,8 @@ float Player::player_x = 0.0f;
 float Player::player_y = 0.0f;
 int Player::currentFrame = 0;
 bool Player::isMoving = false;
-bool Player::isRunning =  false;;
+bool Player::isRunning = false;
+;
 Player::Direction Player::currentDirection = Player::DIR_IDLE;
 // jump
 float Player::jumpZ = 0.0f;
@@ -31,9 +32,8 @@ Player::Player(int x, int y, int w, int h)
     rect = {x, y, w, h};
     player_x = static_cast<float>(x);
     player_y = static_cast<float>(y);
-    
 
-    //walkUp = AddTexture::addTexture("assets/ZombieWALKINGDOWN.png");
+    // walkUp = AddTexture::addTexture("assets/ZombieWALKINGDOWN.png");
     walkUp = AddTexture::addTexture("assets/PLAYERWALKINGUP.png");
     walkDown = AddTexture::addTexture("assets/PLAYERWALKINGDOWN.png");
     walkLeft = AddTexture::addTexture("assets/PLAYERWALKINGLEFT.png");
@@ -53,7 +53,7 @@ Player::~Player()
         SDL_DestroyTexture(walkRight);
 }
 
-void Player::takeDamage(int damage)
+void Player::takeDamage(int damage, float attackerX, float attackerY)
 {
     if (!isAlive)
         return;
@@ -74,9 +74,20 @@ void Player::takeDamage(int damage)
 
         // getItemDrops().push_back(drop);
     }
+    // Calculate knockback direction
+    float dx = player_x - attackerX;
+    float dy = player_y - attackerY;
+    float length = sqrtf(dx * dx + dy * dy);
+
+    if (length != 0.0f)
+    {
+        knockbackX = (dx / length) * knockbackStrength;
+        knockbackY = (dy / length) * knockbackStrength;
+        knockbackTimer = knockbackDuration;
+    }
 }
 
-void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, animal &myanimal , enemy &myenemy)
+void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, animal &myanimal, enemy &myenemy)
 { // Add tree parameter
 
     if (!isAlive)
@@ -91,6 +102,20 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
     attack();                             // Update attack state
 
     updateAnimation();
+
+    // Apply knockback if active
+    if (knockbackTimer > 0.0f)
+    {
+        float dt = Coregame::deltaTime;
+        player_x += knockbackX * dt;
+        player_y += knockbackY * dt;
+
+        knockbackTimer -= dt;
+
+        // Gradually reduce knockback force (optional)
+        knockbackX *= 0.9f;
+        knockbackY *= 0.9f;
+    }
 
     // Update rendering rect (screen-space)
     rect = {
@@ -115,10 +140,10 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
     // Collision check in world-space
     static bool lastCollisionState = false;
     SDL_Rect playerWorldRect = {
-        static_cast<int>(player_x)+5,
-        static_cast<int>(player_y)+10,
-        frameWidth-10,
-        frameHeight-10};
+        static_cast<int>(player_x) + 5,
+        static_cast<int>(player_y) + 10,
+        frameWidth - 10,
+        frameHeight - 10};
 
     bool colliding = false;
     if (!isJumping || jumpZ > -10.0f)
@@ -188,9 +213,8 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
         if (collision::checkCollision(&attackBox, &myenemy.hitbox))
         {
             printf("Attack hit enemy!\n");
-            myenemy.takeDamage(10);
+            myenemy.takeDamage(10,static_cast<float>(attackBox.x), static_cast<float>(attackBox.y));
         }
-
     }
 }
 
@@ -202,10 +226,9 @@ void Player::attack()
     }
     if (mouse::RightClick)
     {
-        //health -=5;
-        takeDamage(5);
+        // health -=5;
+        // takeDamage(5);
     }
-    
 
     if (mouse::LeftClick)
     {
@@ -242,7 +265,7 @@ void Player::updateAnimation()
     {
         return;
     }
-    
+
     if (!isMoving)
     {
         currentFrame = 0;
@@ -251,7 +274,7 @@ void Player::updateAnimation()
 
     Uint32 now = SDL_GetTicks();
     int running = 0;
-    if(isRunning)
+    if (isRunning)
     {
         running = 60;
     }
@@ -327,8 +350,7 @@ void Player::renderCharacter(SDL_Renderer *renderer, float camX, float camY)
         SDL_RenderDrawRect(renderer, &attackRenderRect);
     }
 
-
-    //healthbar
+    // healthbar
     int totalBlocks = 8;
     int blockWidth = 10;
     int blockHeight = 10;
@@ -368,5 +390,5 @@ void Player::renderCharacter(SDL_Renderer *renderer, float camX, float camY)
     // debug
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red
     SDL_RenderDrawRect(renderer, &renderRect);
-    //SDL_RenderDrawRect(renderer, &woorld);
+    // SDL_RenderDrawRect(renderer, &woorld);
 }

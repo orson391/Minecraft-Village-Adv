@@ -22,17 +22,23 @@ public:
 
     void update(float deltaTime, float playerX, float playerY, float camX, float camY, Player &player);
     void draw(SDL_Renderer *renderer, float camX, float camY);
-    void takeDamage(int damage);
+    void takeDamage(int damage,float attackerX, float attackerY);
 
     SDL_Rect hitbox; // World-space hitbox
     int health;
     bool isAlive;
 
+    float knockbackX = 0.0f;
+    float knockbackY = 0.0f;
+    float knockbackTimer = 0.0f;
+    const float knockbackDuration = 0.2f;   // seconds
+    const float knockbackStrength = 200.0f; // pixels per second
+
 private:
     float x, y;       // World position
     float ve_x, ve_y; // Velocity
     enemyState state;
-    float stateTimer;  // Timer for state transitions
+    float stateTimer;     // Timer for state transitions
     float attackCooldown; // Cooldown for attacks
 
     // Animation properties
@@ -43,10 +49,10 @@ private:
     Uint32 frameTime = 120;
     Uint32 lastFrameTime = 0;
 
-    SDL_Texture* walkUp;
-    SDL_Texture* walkDown;
-    SDL_Texture* walkLeft;
-    SDL_Texture* walkRight;
+    SDL_Texture *walkUp;
+    SDL_Texture *walkDown;
+    SDL_Texture *walkLeft;
+    SDL_Texture *walkRight;
     SDL_Rect rect; // Screen-space rectangle for rendering
     SDL_Rect attackBox;
     bool showHealthBar;        // Controls health bar visibility
@@ -55,7 +61,8 @@ private:
     bool attacking = false;
     bool isMoving = false;
 
-    enum class Direction {
+    enum class Direction
+    {
         UP,
         DOWN,
         LEFT,

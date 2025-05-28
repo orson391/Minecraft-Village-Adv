@@ -9,7 +9,7 @@
 #include "collision.h"
 #include "Player.h"
 
-extern std::vector<ItemDrop>& getItemDrops();
+extern std::vector<ItemDrop> &getItemDrops();
 
 enemy::enemy(float startX, float startY)
     : x(startX), y(startY), ve_x(0), ve_y(0), state(enemyState::Idle), stateTimer(2.0f),
@@ -27,16 +27,21 @@ enemy::enemy(float startX, float startY)
 
 enemy::~enemy()
 {
-    if (walkUp) SDL_DestroyTexture(walkUp);
-    if (walkDown) SDL_DestroyTexture(walkDown);
-    if (walkLeft) SDL_DestroyTexture(walkLeft);
-    if (walkRight) SDL_DestroyTexture(walkRight);
+    if (walkUp)
+        SDL_DestroyTexture(walkUp);
+    if (walkDown)
+        SDL_DestroyTexture(walkDown);
+    if (walkLeft)
+        SDL_DestroyTexture(walkLeft);
+    if (walkRight)
+        SDL_DestroyTexture(walkRight);
 }
 
-void enemy::takeDamage(int damage)
+void enemy::takeDamage(int damage,float attackerX, float attackerY)
 {
-    if (!isAlive) return;
-    //printf("%d health\n",health);
+    if (!isAlive)
+        return;
+    // printf("%d health\n",health);
     health -= damage;
     showHealthBar = true;
     healthBarTimer = 2.0f; // Show health bar for 2 seconds
@@ -47,28 +52,53 @@ void enemy::takeDamage(int damage)
         isAlive = false;
         printf("Zombie Died\n");
 
-        SDL_Texture* itemTexture = AddTexture::addTexture("assets/Raw_Mutton_JE3_BE2.png");
+        SDL_Texture *itemTexture = AddTexture::addTexture("assets/Raw_Mutton_JE3_BE2.png");
         if (itemTexture)
         {
             ItemDrop drop(hitbox.x, hitbox.y, "Rotten Flesh", itemTexture, 2);
             getItemDrops().push_back(drop);
         }
     }
+    // Calculate knockback direction
+    float dx = x - attackerX;
+    float dy = y - attackerY;
+    float length = sqrtf(dx * dx + dy * dy);
+
+    if (length != 0.0f)
+    {
+        knockbackX = (dx / length) * knockbackStrength;
+        knockbackY = (dy / length) * knockbackStrength;
+        knockbackTimer = knockbackDuration;
+    }
 }
 
 void enemy::update(float deltaTime, float playerX, float playerY, float camX, float camY, Player &player)
 {
-    if (!isAlive) return;
+    if (!isAlive)
+        return;
     if (!player.isAlive)
     {
-        state=enemyState::Wander;
+        state = enemyState::Wander;
     }
-    
 
     // Update attack cooldown
     if (attackCooldown > 0.0f)
     {
         attackCooldown -= deltaTime;
+    }
+
+    // Apply knockback if active
+    if (knockbackTimer > 0.0f)
+    {
+        float dt = Coregame::deltaTime;
+        x += knockbackX * dt;
+        y += knockbackY * dt;
+
+        knockbackTimer -= dt;
+
+        // Gradually reduce knockback force (optional)
+        knockbackX *= 0.9f;
+        knockbackY *= 0.9f;
     }
 
     // Calculate distance to player
@@ -153,11 +183,16 @@ void enemy::update(float deltaTime, float playerX, float playerY, float camX, fl
     }
     else
     {
-        if (ve_x > 0) currentDirection = Direction::RIGHT;
-        else if (ve_x < 0) currentDirection = Direction::LEFT;
-        else if (ve_y > 0) currentDirection = Direction::DOWN;
-        else if (ve_y < 0) currentDirection = Direction::UP;
-        else currentDirection = Direction::IDLE;
+        if (ve_x > 0)
+            currentDirection = Direction::RIGHT;
+        else if (ve_x < 0)
+            currentDirection = Direction::LEFT;
+        else if (ve_y > 0)
+            currentDirection = Direction::DOWN;
+        else if (ve_y < 0)
+            currentDirection = Direction::UP;
+        else
+            currentDirection = Direction::IDLE;
     }
 
     isMoving = (ve_x != 0 || ve_y != 0);
@@ -208,8 +243,7 @@ void enemy::update(float deltaTime, float playerX, float playerY, float camX, fl
         static_cast<int>(player.player_x) + 5,
         static_cast<int>(player.player_y) + 10,
         player.frameWidth - 10,
-        player.frameHeight - 10
-    };
+        player.frameHeight - 10};
 
     if (collision::checkCollision(&hitbox, &playerWorldRect) && player.isAlive)
     {
@@ -225,7 +259,7 @@ void enemy::update(float deltaTime, float playerX, float playerY, float camX, fl
     {
         if (collision::checkCollision(&attackBox, &playerWorldRect))
         {
-            player.takeDamage(5);
+            player.takeDamage(5, static_cast<float>(attackBox.x), static_cast<float>(attackBox.y));
             attackCooldown = 1.0f; // 1-second cooldown
             printf("Zombie attacked player, dealing 5 damage\n");
         }
@@ -272,7 +306,8 @@ void enemy::updateAnimation()
 
 void enemy::draw(SDL_Renderer *renderer, float camX, float camY)
 {
-    if (!isAlive) return;
+    if (!isAlive)
+        return;
 
     SDL_Texture *currentTexture = walkDown; // Default to down
     switch (currentDirection)
@@ -297,8 +332,7 @@ void enemy::draw(SDL_Renderer *renderer, float camX, float camY)
         currentFrame * frameWidth,
         0,
         frameWidth,
-        frameHeight
-    };
+        frameHeight};
 
     SDL_RenderCopy(renderer, currentTexture, &srcRect, &rect);
 
@@ -308,8 +342,7 @@ void enemy::draw(SDL_Renderer *renderer, float camX, float camY)
         rect.x + 8,
         rect.y + rect.h - 10,
         rect.w - 16,
-        10
-    };
+        10};
     SDL_RenderFillRect(renderer, &shadow);
 
     // Render attackBox for debugging
@@ -320,8 +353,7 @@ void enemy::draw(SDL_Renderer *renderer, float camX, float camY)
             attackBox.x - static_cast<int>(camX),
             attackBox.y - static_cast<int>(camY),
             attackBox.w,
-            attackBox.h
-        };
+            attackBox.h};
         SDL_RenderDrawRect(renderer, &attackRenderRect);
     }
 
