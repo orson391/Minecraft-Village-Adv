@@ -16,6 +16,7 @@ enemy::enemy(float startX, float startY)
       health(maxHealth), isAlive(true), showHealthBar(false), healthBarTimer(0.0f),
       attackCooldown(0.0f)
 {
+    health = maxHealth;
     walkUp = AddTexture::addTexture("assets/ZombieWALKINGUP.png");
     walkDown = AddTexture::addTexture("assets/ZombieWALKINGDOWN.png");
     walkLeft = AddTexture::addTexture("assets/ZombieWALKINGLEFT.png");
@@ -35,7 +36,7 @@ enemy::~enemy()
 void enemy::takeDamage(int damage)
 {
     if (!isAlive) return;
-
+    //printf("%d health\n",health);
     health -= damage;
     showHealthBar = true;
     healthBarTimer = 2.0f; // Show health bar for 2 seconds
@@ -329,7 +330,7 @@ void enemy::draw(SDL_Renderer *renderer, float camX, float camY)
     {
         const int totalBlocks = 8;
         const int blockWidth = 4;
-        const int blockHeight = 2;
+        const int blockHeight = 4;
         const int blockSpacing = 5;
         const int healthPerBlock = maxHealth / totalBlocks;
 
