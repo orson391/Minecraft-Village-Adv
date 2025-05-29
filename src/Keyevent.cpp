@@ -9,9 +9,9 @@ void Keyevent::update(float deltaTime) {
     Uint32 mouseState = SDL_GetMouseState(&mouseX, &mouseY);
     mouse::HoldLeftClick = false;
     mouse::HoldRightClick = false;
+    mouse::mouseX = mouseX;
+    mouse::mouseY = mouseY;
     if (mouseState & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-        mouse::mouseX = mouseX;
-        mouse::mouseY = mouseY;
         mouse::HoldLeftClick = true;
         //printf("Left mouse HELD at (%d, %d)\n", mouseX, mouseY);
         // Handle continuous left-click actions

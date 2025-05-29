@@ -9,6 +9,7 @@
 #include "rock.h"
 #include "animal.h"
 #include "enemy.h"
+#include <math.h>
 
 // Static member definitions
 float Player::player_x = 0.0f;
@@ -38,6 +39,9 @@ Player::Player(int x, int y, int w, int h)
     walkDown = AddTexture::addTexture("assets/PLAYERWALKINGDOWN.png");
     walkLeft = AddTexture::addTexture("assets/PLAYERWALKINGLEFT.png");
     walkRight = AddTexture::addTexture("assets/PLAYERWALKINGRIGHT.png"); // Fixed typo
+
+    
+    crossHair = AddTexture::addTexture("temp/crosshair.png");
 }
 
 Player::~Player()
@@ -51,6 +55,9 @@ Player::~Player()
         SDL_DestroyTexture(walkLeft);
     if (walkRight)
         SDL_DestroyTexture(walkRight);
+
+    if(crossHair)
+        SDL_DestroyTexture(crossHair);
 }
 
 void Player::takeDamage(int damage, float attackerX, float attackerY)
@@ -387,8 +394,48 @@ void Player::renderCharacter(SDL_Renderer *renderer, float camX, float camY)
         SDL_RenderFillRect(renderer, &HealthRect);
     }
 
+
+    // crossHairRect = {rect.x+50,rect.y+50,10,10};
+    // SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red
+    // SDL_RenderDrawRect(renderer, &crossHairRect);
+    DrawCrosshair(renderer,mouse::mouseX,mouse::mouseY);
+
+    //SDL_RenderCopy(renderer,crossHair,crossHairRect)
     // debug
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red
     SDL_RenderDrawRect(renderer, &renderRect);
     // SDL_RenderDrawRect(renderer, &woorld);
+}
+void Player::DrawCrosshair(SDL_Renderer* renderer,int mouseX, int mouseY) {
+    // Center of the rect
+    float centerX = rect.x + rect.w / 2;
+    float centerY = rect.y + rect.h / 2;
+
+    // Vector from center to mouse
+    float dx = mouseX - centerX;
+    float dy = mouseY - centerY;
+
+    // Distance
+    float distance = sqrtf(dx * dx + dy * dy);
+
+    // Clamp to 50-pixel radius
+    float maxDistance = 50.0f;
+    if (distance > maxDistance) {
+        float scale = maxDistance / distance;
+        dx *= scale;
+        dy *= scale;
+    }
+
+    // Crosshair position
+    int crossX = (int)(centerX + dx);
+    int crossY = (int)(centerY + dy);
+
+    crossHairRect = { crossX - 5, crossY - 5, 20, 20 }; // Centered 10x10 square
+
+    // Draw the crosshair texture centered on this point
+    //SDL_Rect destRect = { crossX - 10, crossY - 10, 20, 20 }; // assuming 20x20 texture
+    SDL_RenderCopy(renderer, crossHair, NULL, &crossHairRect);
+
+    //SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red
+     //SDL_RenderDrawRect(renderer, &crossHairRect);
 }

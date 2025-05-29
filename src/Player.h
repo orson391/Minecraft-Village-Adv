@@ -73,6 +73,9 @@ public:
     const float knockbackDuration = 0.2f;   // seconds
     const float knockbackStrength = 200.0f; // pixels per second
 
+    SDL_Texture *crossHair;
+    SDL_Rect crossHairRect;
+    void DrawCrosshair(SDL_Renderer* renderer,int mouseX, int mouseY);
 private:
     Keyevent keyevent;
 };
