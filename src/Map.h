@@ -3,7 +3,7 @@
 #include <SDL2/SDL.h>
 
 const int WORLD_WIDTH = 60;  // Matches original dimensions (1920 / 32)
-const int WORLD_HEIGHT = 32; // Matches original dimensions (1024 / 32)
+const int WORLD_HEIGHT = 60; // Matches original dimensions (1024 / 32)
 const int TILE_SIZE = 32;
 
 // Base tile types (for terrain generation)
