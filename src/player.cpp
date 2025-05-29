@@ -41,7 +41,7 @@ Player::Player(int x, int y, int w, int h)
     walkRight = AddTexture::addTexture("assets/PLAYERWALKINGRIGHT.png"); // Fixed typo
 
     
-    crossHair = AddTexture::addTexture("temp/crosshair.png");
+    crossHair = AddTexture::addTexture("assets/crosshair.png");
 }
 
 Player::~Player()
@@ -233,8 +233,8 @@ void Player::attack()
     }
     if (mouse::RightClick)
     {
-        // health -=5;
-        // takeDamage(5);
+        attacking = true;
+        attackBox = {crossHairRect.x,crossHairRect.y,5,2};
     }
 
     if (mouse::LeftClick)
@@ -430,7 +430,7 @@ void Player::DrawCrosshair(SDL_Renderer* renderer,int mouseX, int mouseY) {
     int crossX = (int)(centerX + dx);
     int crossY = (int)(centerY + dy);
 
-    crossHairRect = { crossX - 5, crossY - 5, 20, 20 }; // Centered 10x10 square
+    crossHairRect = { crossX - 5, crossY - 5, 16, 16 }; // Centered 10x10 square
 
     // Draw the crosshair texture centered on this point
     //SDL_Rect destRect = { crossX - 10, crossY - 10, 20, 20 }; // assuming 20x20 texture
