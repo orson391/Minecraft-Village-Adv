@@ -1,3 +1,4 @@
+
 #include "Player.h"
 #include <SDL2/SDL.h>
 #include "Map.h"
@@ -17,7 +18,6 @@ float Player::player_y = 0.0f;
 int Player::currentFrame = 0;
 bool Player::isMoving = false;
 bool Player::isRunning = false;
-;
 Player::Direction Player::currentDirection = Player::DIR_IDLE;
 // jump
 float Player::jumpZ = 0.0f;
@@ -34,13 +34,11 @@ Player::Player(int x, int y, int w, int h)
     player_x = static_cast<float>(x);
     player_y = static_cast<float>(y);
 
-    // walkUp = AddTexture::addTexture("assets/ZombieWALKINGDOWN.png");
     walkUp = AddTexture::addTexture("assets/PLAYERWALKINGUP.png");
     walkDown = AddTexture::addTexture("assets/PLAYERWALKINGDOWN.png");
     walkLeft = AddTexture::addTexture("assets/PLAYERWALKINGLEFT.png");
-    walkRight = AddTexture::addTexture("assets/PLAYERWALKINGRIGHT.png"); // Fixed typo
+    walkRight = AddTexture::addTexture("assets/PLAYERWALKINGRIGHT.png");
 
-    
     crossHair = AddTexture::addTexture("assets/crosshair.png");
 }
 
@@ -72,14 +70,6 @@ void Player::takeDamage(int damage, float attackerX, float attackerY)
         health = 0;
         isAlive = false;
         printf("Player broke\n");
-        // Drop item
-        // SDL_Texture* itemTexture = AddTexture::addTexture("assets/Raw_Mutton_JE3_BE2.png");
-        // ItemDrop drop(hitbox.x, hitbox.y, "Meat", itemTexture, 1);
-        // printf("Item Droped at %d %d\n", hitbox.x, hitbox.y);
-        // ItemDrop drop(x+70, y+40, "Rock", itemTexture, 10);
-        // printf("Item Droped at %f %f\n",x,y);
-
-        // getItemDrops().push_back(drop);
     }
     // Calculate knockback direction
     float dx = player_x - attackerX;
@@ -94,9 +84,8 @@ void Player::takeDamage(int damage, float attackerX, float attackerY)
     }
 }
 
-void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, animal &myanimal, enemy &myenemy)
-{ // Add tree parameter
-
+void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, animal &myanimal, enemy &myenemy, int mouseX, int mouseY)
+{
     if (!isAlive)
     {
         return;
@@ -106,7 +95,7 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
     float prev_y = player_y;
 
     keyevent.update(Coregame::deltaTime); // Update movement
-    attack();                             // Update attack state
+    attack(mouseX, mouseY, cam_x, cam_y); // Update attack state with mouse and camera position
 
     updateAnimation();
 
@@ -176,7 +165,6 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
             }
             else
             {
-
                 colliding = true;
                 player_x = prev_x; // Revert movement
                 player_y = prev_y;
@@ -184,12 +172,10 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
         }
         if (collision::checkCollision(&playerWorldRect, &myanimal.hitbox))
         {
-
             colliding = true;
         }
         if (collision::checkCollision(&playerWorldRect, &myenemy.hitbox))
         {
-
             colliding = true;
         }
     }
@@ -220,44 +206,61 @@ void Player::update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, anim
         if (collision::checkCollision(&attackBox, &myenemy.hitbox))
         {
             printf("Attack hit enemy!\n");
-            myenemy.takeDamage(10,static_cast<float>(attackBox.x), static_cast<float>(attackBox.y));
+            myenemy.takeDamage(10, static_cast<float>(attackBox.x), static_cast<float>(attackBox.y));
         }
     }
 }
 
-void Player::attack()
+void Player::attack(int mouseX, int mouseY, float camX, float camY)
 {
     if (!isAlive)
     {
         return;
     }
-    if (mouse::RightClick)
-    {
-        attacking = true;
-        attackBox = {crossHairRect.x,crossHairRect.y,5,2};
-    }
 
-    if (mouse::LeftClick)
+    if (mouse::LeftClick || mouse::RightClick)
     {
         attacking = true;
-        switch (currentDirection)
+        
+        // Center of the player in world space
+        float centerX = player_x + frameWidth / 2;
+        float centerY = player_y + frameHeight / 2;
+        
+        // Convert mouse position (screen space) to world space
+        float worldMouseX = mouseX + camX;
+        float worldMouseY = mouseY + camY;
+        
+        // Vector from player center to mouse position
+        float dx = worldMouseX - centerX;
+        float dy = worldMouseY - centerY;
+        float distance = sqrtf(dx * dx + dy * dy);
+        
+        // Normalize direction
+        float dirX = 0.0f;
+        float dirY = 0.0f;
+        if (distance != 0.0f)
         {
-        case DIR_UP:
-            attackBox = {static_cast<int>(player_x), static_cast<int>(player_y - 20), frameWidth, 20};
-            break;
-        case DIR_DOWN:
-            attackBox = {static_cast<int>(player_x), static_cast<int>(player_y + frameHeight), frameWidth, 20};
-            break;
-        case DIR_LEFT:
-            attackBox = {static_cast<int>(player_x - 20), static_cast<int>(player_y), 20, frameHeight};
-            break;
-        case DIR_RIGHT:
-            attackBox = {static_cast<int>(player_x + frameWidth), static_cast<int>(player_y), 20, frameHeight};
-            break;
-        default:
-            attackBox = {0, 0, 0, 0};
-            break;
+            dirX = dx / distance;
+            dirY = dy / distance;
         }
+        
+        // Define attack box size and offset
+        const int attackWidth = 30;
+        const int attackHeight = 30;
+        const float attackOffset = 10.0f; // Distance from player center to start of attack box
+        
+        // Position attack box in the direction of the crosshair in world space
+        attackBox = {
+            static_cast<int>(centerX + dirX * attackOffset) -15,
+            static_cast<int>(centerY + dirY * attackOffset) -15,
+            attackWidth,
+            attackHeight
+        };
+        
+        // Debug output to check positions
+        printf("Player center: (%.1f, %.1f), Mouse world: (%.1f, %.1f), Attack box: (%d, %d, %d, %d)\n",
+               centerX, centerY, worldMouseX, worldMouseY,
+               attackBox.x, attackBox.y, attackBox.w, attackBox.h);
     }
     else
     {
@@ -294,11 +297,8 @@ void Player::updateAnimation()
 
 void Player::renderCharacter(SDL_Renderer *renderer, float camX, float camY)
 {
-
     if (!isAlive)
         return;
-
-    /* code */
 
     SDL_Texture *currentTexture = walkDown; // Default to down
 
@@ -326,12 +326,7 @@ void Player::renderCharacter(SDL_Renderer *renderer, float camX, float camY)
         frameWidth,
         frameHeight};
 
-    // SDL_RenderCopy(renderer, currentTexture, &srcRect, &rect);
-
-    // jump
-
     // Draw shadow before player
-    // Draw shadow
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);
     SDL_Rect shadow = {
         rect.x + 8,
@@ -357,7 +352,7 @@ void Player::renderCharacter(SDL_Renderer *renderer, float camX, float camY)
         SDL_RenderDrawRect(renderer, &attackRenderRect);
     }
 
-    // healthbar
+    // Healthbar
     int totalBlocks = 8;
     int blockWidth = 10;
     int blockHeight = 10;
@@ -394,19 +389,14 @@ void Player::renderCharacter(SDL_Renderer *renderer, float camX, float camY)
         SDL_RenderFillRect(renderer, &HealthRect);
     }
 
+    DrawCrosshair(renderer, mouse::mouseX, mouse::mouseY);
 
-    // crossHairRect = {rect.x+50,rect.y+50,10,10};
-    // SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red
-    // SDL_RenderDrawRect(renderer, &crossHairRect);
-    DrawCrosshair(renderer,mouse::mouseX,mouse::mouseY);
-
-    //SDL_RenderCopy(renderer,crossHair,crossHairRect)
-    // debug
+    // Debug
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red
     SDL_RenderDrawRect(renderer, &renderRect);
-    // SDL_RenderDrawRect(renderer, &woorld);
 }
-void Player::DrawCrosshair(SDL_Renderer* renderer,int mouseX, int mouseY) {
+
+void Player::DrawCrosshair(SDL_Renderer* renderer, int mouseX, int mouseY) {
     // Center of the rect
     float centerX = rect.x + rect.w / 2;
     float centerY = rect.y + rect.h / 2;
@@ -430,12 +420,8 @@ void Player::DrawCrosshair(SDL_Renderer* renderer,int mouseX, int mouseY) {
     int crossX = (int)(centerX + dx);
     int crossY = (int)(centerY + dy);
 
-    crossHairRect = { crossX - 5, crossY - 5, 16, 16 }; // Centered 10x10 square
+    crossHairRect = { crossX - 5, crossY - 5, 16, 16 }; // Centered 16x16 square
 
     // Draw the crosshair texture centered on this point
-    //SDL_Rect destRect = { crossX - 10, crossY - 10, 20, 20 }; // assuming 20x20 texture
     SDL_RenderCopy(renderer, crossHair, NULL, &crossHairRect);
-
-    //SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red
-     //SDL_RenderDrawRect(renderer, &crossHairRect);
 }

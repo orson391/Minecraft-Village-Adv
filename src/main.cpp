@@ -17,6 +17,7 @@
 
 #include <vector>
 #include <iostream>
+#include "mouse.h"
 
 // Global item drops
 std::vector<ItemDrop> itemDrops;
@@ -118,7 +119,8 @@ int main(int argc, char *argv[])
 
         myanimal.update(deltaTime, player.player_x, player.player_y, cam.camara_x, cam.camara_y);
         myenemy.update(deltaTime,player.player_x, player.player_y, cam.camara_x, cam.camara_y,player);
-        player.update(cam.camara_x, cam.camara_y, mytree, myrock, myanimal ,myenemy);
+        //player.update(cam.camara_x, cam.camara_y, mytree, myrock, myanimal ,myenemy);
+        player.update(cam.camara_x, cam.camara_y, mytree, myrock, myanimal, myenemy, mouse::mouseX, mouse::mouseY);
 
         for (auto &drop : itemDrops)
         {

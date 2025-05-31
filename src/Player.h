@@ -6,7 +6,7 @@
 #include "animal.h"
 #include "enemy.h"
 
-class enemy; // 👈 Forward declaration
+class enemy; // Forward declaration
 class tree;
 class rock;
 class animal;
@@ -25,8 +25,6 @@ public:
 
     int health;
     bool isAlive;
-    // Controls health bar visibility
-
     const int maxHealth = 100; // Maximum health
 
     static float player_x; // Declaration only
@@ -44,11 +42,11 @@ public:
     };
     static Direction currentDirection;
 
-    void update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, animal &myanimal, enemy &myenemy);
+    void update(float &cam_x, float &cam_y, tree &mytree, rock &myrock, animal &myanimal, enemy &myenemy, int mouseX, int mouseY);
     void updateAnimation();
     void renderCharacter(SDL_Renderer *renderer, float camX, float camY);
 
-    void takeDamage(int damage,float attackerX, float attackerY);
+    void takeDamage(int damage, float attackerX, float attackerY);
 
     int totalFrames = 8;
     int frameWidth = 32;
@@ -57,7 +55,7 @@ public:
     Uint32 lastFrameTime = 0;
 
     static bool attacking;
-    void attack();
+    void attack(int mouseX, int mouseY, float camX, float camY);
 
     // Jumping
     static float jumpZ; // How high the character is "in the air"
@@ -75,7 +73,7 @@ public:
 
     SDL_Texture *crossHair;
     SDL_Rect crossHairRect;
-    void DrawCrosshair(SDL_Renderer* renderer,int mouseX, int mouseY);
+    void DrawCrosshair(SDL_Renderer* renderer, int mouseX, int mouseY);
 private:
     Keyevent keyevent;
 };
